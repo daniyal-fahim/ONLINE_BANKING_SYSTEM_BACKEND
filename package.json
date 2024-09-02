@@ -1,0 +1,15 @@
+{
+  "name": "db-project",
+  "version": "1.0.0",
+  "description": "FASCINATING DATABASE PROJECT OF ONLINE BANKING WEBSITE",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniyal Fahim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
