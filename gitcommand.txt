@@ -1,0 +1,13 @@
+git status
+
+git add .
+
+git status
+
+git commit -m "login and registration done"
+
+git status
+
+git remote set-url origin https://github.com/daniyal-fahim/ONLINE_BANKING_SYSTEM_BACKEND.git
+
+git push -u origin main
