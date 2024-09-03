@@ -13,7 +13,7 @@ app.use(bodyparser.urlencoded({extended:true}));
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'users',
+  database: 'BANKING WORLD',
   password: 'FAST',
   port: 5432,
 });
@@ -26,8 +26,31 @@ app.listen(port,(req,res)=>{
     console.log("YOUR BACKEND HAS BEEN SUCCESFULLY STARTED");
 });
 
-app.post("/usersubmit",(req,res)=>{
-    console.log(req.body);
+app.post('/login', async (req,res)=>{
+    const { username , password}=req.body;
+    try{
+      const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+
+      // Check if the user exists
+      if (result.rows.length > 0) {
+          const user = result.rows[0];
+          const match = await bcrypt.compare(password, user.password);
+      
+          if (match) {
+              // Passwords match
+              console.log('Authentication successful');
+          } else {
+              // Passwords do not match
+              console.log('Authentication failed: Incorrect password');
+          }
+      } else {
+          // No user found with the given username
+          console.log('Authentication failed: User not found');
+      }
+    }catch(err){
+    console.error(err.message);
+    res.status(500).json({ message: 'Server error' });
+    }
 });
 
 app.post('/register', async (req, res) => {
