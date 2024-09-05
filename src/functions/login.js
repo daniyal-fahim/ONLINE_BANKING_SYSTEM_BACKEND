@@ -1,4 +1,5 @@
-import bcrypt from "bcryptjs";
+import { pool, bcrypt } from '../../index.js';
+
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
@@ -80,6 +81,37 @@ export const register = async (req, res) => {
     );
 
     res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const delete1 = async (req, res) => {
+  const { username, password } = req.body;
+  const temp = await pool.query("SELECT * FROM users WHERE username = $1", [
+    username,
+  ]);
+  try {
+    if (temp.rows.length > 0) {
+      const user = temp.rows[0];
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        // Passwords match
+        console.log("Authentication successful");
+        res.send('USER HAS BEERM DELETED SUCCESSFULLY');
+        const temp1 = await pool.query("DELETE FROM users WHERE username = $1", [
+          username,
+        ]);
+        
+      } else {
+        // Passwords do not match
+        console.log("Authentication failed: Incorrect password");
+      }
+    } else {
+      // No user found with the given username
+      console.log("Authentication failed: User not found");
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server error" });
