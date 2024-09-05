@@ -7,13 +7,13 @@ import userRouter from "./src/routes/UserRoute.js"
 import cors from 'cors';
 
 const corsOptions ={
-    origin:'http://localhost:5173', 
+    origin:'http://localhost:3000', //FRONYEND RUNNING AT 3000
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
 
 const app = express();
-const port = 3000;
+const port = 5000; //BACKEND RUNNING AT 5000
 
  //Configuring the Postgres server as pool
 const pool = new Pool({

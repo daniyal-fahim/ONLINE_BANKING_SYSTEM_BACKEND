@@ -1,6 +1,6 @@
 import express from 'express';
-// const router = express.Router();
-const router = express();
+ const router = express.Router();
+// const router = express();
 
 import { login, find, register, delete1 } from "../functions/login.js"
 // Sample user route

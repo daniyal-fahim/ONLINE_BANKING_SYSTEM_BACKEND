@@ -7,3 +7,5 @@ CREATE TABLE users (
     nationality VARCHAR(50),
     gender VARCHAR(10)
 );
+
+ALTER TABLE users RENAME COLUMN username TO email;

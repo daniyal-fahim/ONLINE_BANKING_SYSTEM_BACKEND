@@ -1,7 +1,9 @@
 git status
 git add .
 git status
-git commit -m "I HAVE USED MULTIPLE FOLDER TO ACHIEVE MORE READABILITY IN CODE DELETE FUNCTIONALTY ADDED AND QUERY.SQL ADDED"
+git commit -m "JOINED FRONTEND AND BACKEND LOGIN PAGE"
 git status
-git remote set-url origin 
 git push -u origin main
+
+
+git remote set-url origin 

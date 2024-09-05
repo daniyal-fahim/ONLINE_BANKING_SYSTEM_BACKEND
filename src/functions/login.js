@@ -2,10 +2,10 @@ import { pool, bcrypt } from '../../index.js';
 
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
-      username,
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+     email,
     ]);
 
     // Check if the user exists
@@ -16,12 +16,18 @@ export const login = async (req, res) => {
       if (match) {
         // Passwords match
         console.log("Authentication successful");
-      } else {
+        res.status(200).json({
+          ok: true,  // boolean value, not a string
+          message: 'Login successful!',  // Optional message or data
+        });
+        
+       }
+      else {
         // Passwords do not match
         console.log("Authentication failed: Incorrect password");
       }
     } else {
-      // No user found with the given username
+      // No user found with the given email
       console.log("Authentication failed: User not found");
     }
   } catch (err) {
@@ -31,9 +37,9 @@ export const login = async (req, res) => {
 };
 
 export const find = async (req, res) => {
-  const { username, password } = req.body;
-  const temp = await pool.query("SELECT * FROM users WHERE username = $1", [
-    username,
+  const { email, password } = req.body;
+  const temp = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
   ]);
   try {
     if (temp.rows.length > 0) {
@@ -49,7 +55,7 @@ export const find = async (req, res) => {
         console.log("Authentication failed: Incorrect password");
       }
     } else {
-      // No user found with the given username
+      // No user found with the given email
       console.log("Authentication failed: User not found");
     }
   } catch (err) {
@@ -59,13 +65,13 @@ export const find = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { username, password, fname, lname, nationality, gender } = req.body;
+  const { email, password, fname, lname, nationality, gender } = req.body;
 
   try {
     // Check if the user already exists
     const userExists = await pool.query(
-      "SELECT * FROM users WHERE username = $1",
-      [username]
+      "SELECT * FROM users WHERE email = $1",
+      [email]
     );
     if (userExists.rows.length > 0) {
       return res.status(400).json({ message: "User already exists" });
@@ -76,8 +82,8 @@ export const register = async (req, res) => {
 
     // Insert new user into the database
     await pool.query(
-      "INSERT INTO users (username, password,fname,lname,nationality,gender) VALUES ($1, $2,$3,$4,$5,$6)",
-      [username, hashedPassword, fname, lname, nationality, gender]
+      "INSERT INTO users (email, password,fname,lname,nationality,gender) VALUES ($1, $2,$3,$4,$5,$6)",
+      [email, hashedPassword, fname, lname, nationality, gender]
     );
 
     res.status(201).json({ message: "User registered successfully" });
@@ -88,9 +94,9 @@ export const register = async (req, res) => {
 };
 
 export const delete1 = async (req, res) => {
-  const { username, password } = req.body;
-  const temp = await pool.query("SELECT * FROM users WHERE username = $1", [
-    username,
+  const { email, password } = req.body;
+  const temp = await pool.query("SELECT * FROM users WHERE email = $1", [
+    email,
   ]);
   try {
     if (temp.rows.length > 0) {
@@ -100,8 +106,8 @@ export const delete1 = async (req, res) => {
         // Passwords match
         console.log("Authentication successful");
         res.send('USER HAS BEERM DELETED SUCCESSFULLY');
-        const temp1 = await pool.query("DELETE FROM users WHERE username = $1", [
-          username,
+        const temp1 = await pool.query("DELETE FROM users WHERE email = $1", [
+          email,
         ]);
         
       } else {
@@ -109,7 +115,7 @@ export const delete1 = async (req, res) => {
         console.log("Authentication failed: Incorrect password");
       }
     } else {
-      // No user found with the given username
+      // No user found with the given email
       console.log("Authentication failed: User not found");
     }
   } catch (err) {
