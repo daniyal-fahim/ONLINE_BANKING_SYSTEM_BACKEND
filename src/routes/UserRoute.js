@@ -2,7 +2,7 @@ import express from 'express';
  const router = express.Router();
 // const router = express();
 
-import { login, find, register, delete1 } from "../functions/login.js"
+import { login, find, register, delete1 ,billing,showBills} from "../functions/login.js"
 // Sample user route
 
 router.get('/', (req, res) => {
@@ -20,5 +20,7 @@ router.post("/register", register);
 
 router.post("/delete",delete1);
 
+router.post("/billing",billing);
 
+router.post("/showbill",showBills);
 export default router;

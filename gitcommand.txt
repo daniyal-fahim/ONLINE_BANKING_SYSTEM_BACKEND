@@ -1,9 +1,11 @@
 git status
 git add .
 git status
-git commit -m "JOINED FRONTEND AND BACKEND LOGIN PAGE"
+git commit -m "ADDING BILLING FUNCTIONALITIES TO THE PROJECT BACKEND SHOWBILL AND BILLING ADDED "
 git status
 git push -u origin main
 
 
 git remote set-url origin 
+
+git pull origin main
