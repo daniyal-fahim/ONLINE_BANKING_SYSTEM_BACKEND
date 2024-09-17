@@ -1,6 +1,7 @@
-import { pool, bcrypt } from "../../index.js";
+import { pool, bcrypt, jwt ,secret} from "../../index.js";
 
 var Gemail = "DANI@GM";
+// var secret='secret';
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -16,10 +17,33 @@ export const login = async (req, res) => {
       if (match) {
         // Passwords match
         Gemail = email;
+        
+        var data = {
+          email
+        };
+
+        var token = jwt.sign(
+          {
+            data,
+          },
+         secret,
+          { expiresIn: "1h" }
+        );
+
+        res.cookie('token', token, {
+          httpOnly: true,           
+          secure: false,           
+          sameSite: 'Strict',      
+          maxAge: 3600000,         
+          path: '/',               
+          domain: 'localhost',      
+        });
+        
         console.log("Authentication successful");
+        console.log(token);
         res.status(200).json({
-          ok: true, // boolean value, not a string
-          message: "Login successful!", // Optional message or data
+          ok: true,  
+          message: "Login successful!", 
         });
       } else {
         // Passwords do not match
@@ -50,7 +74,6 @@ export const find = async (req, res) => {
         console.log(user);
         res.json(user);
       } else {
-        // Passwords do not match
         console.log("Authentication failed: Incorrect password");
       }
     } else {
@@ -197,19 +220,25 @@ export const showBills = async (req, res) => {
 
   try {
     // Query to check if the user exists and get the hashed password
-    const userResult = await pool.query("SELECT password FROM users WHERE email = $1", [email]);
+    const userResult = await pool.query(
+      "SELECT password FROM users WHERE email = $1",
+      [email]
+    );
 
     if (userResult.rows.length > 0) {
       const user = userResult.rows[0];
-      
+
       // Compare the provided password with the stored hashed password
       const match = await bcrypt.compare(password, user.password);
 
       if (match) {
         // Passwords match, fetch the user's bills
         console.log("Authentication successful");
-        
-        const billsResult = await pool.query("SELECT * FROM bills WHERE email = $1", [email]);
+
+        const billsResult = await pool.query(
+          "SELECT * FROM bills WHERE email = $1",
+          [email]
+        );
 
         if (billsResult.rows.length > 0) {
           // Send the bills in the response
@@ -220,14 +249,41 @@ export const showBills = async (req, res) => {
         }
       } else {
         // Passwords do not match
-        res.status(401).json({ message: "Authentication failed: Incorrect password" });
+        res
+          .status(401)
+          .json({ message: "Authentication failed: Incorrect password" });
       }
     } else {
       // No user found with the given email
-      res.status(404).json({ message: "Authentication failed: User not found" });
+      res
+        .status(404)
+        .json({ message: "Authentication failed: User not found" });
     }
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+export const authenticateToken = (req, res, next)=> {
+  console.log('Cookies in request:', req.cookies); // Log the cookies
+
+  const token = req.cookies.token; // Retrieve token from cookies
+  console.log('Token:', req.cookies.token); // Log the token for debugging
+  console.log('I AM CALLED YOU DONT WORRY');
+
+  if (!token) {
+    return res.sendStatus(403); // Forbidden if no token
+  }
+
+  jwt.verify(token, secret, (err, user) => { // Use the same secret here
+    if (err) {
+      res.clearCookie("token");
+      return res.sendStatus(403); // Invalid token
+    }
+    console.log('Token Verified:', user);
+
+    req.user = user; // Attach decoded user to request
+    next(); // Proceed to the next middleware
+  });
 };
