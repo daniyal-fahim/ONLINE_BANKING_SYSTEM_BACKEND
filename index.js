@@ -32,31 +32,6 @@ app.use(cors(corsOptions));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use("/",userRouter);
-
-
-//jwt authentication
-// function authenticateToken(req, res, next) {
-//   const token = req.cookies.token; // Retrieve token from cookies
-//   console.log('Token:', req.cookies.token); // Log the token for debugging
-//   console.log('I AM CALLED YOU DONT WORRY');
-
-//   if (!token) {
-//     return res.sendStatus(403); // Forbidden if no token
-//   }
-
-//   jwt.verify(token, secret, (err, user) => { // Use the same secret here
-//     if (err) {
-//       res.clearCookie("token");
-//       return res.sendStatus(403); // Invalid token
-//     }
-//     console.log('Token Verified:', user);
-
-//     req.user = user; // Attach decoded user to request
-//     next(); // Proceed to the next middleware
-//   });
-// }
-
-// Apply authentication middleware to protected routes
  
 app.use((err, req, res, next) => {
   console.error(err.stack);

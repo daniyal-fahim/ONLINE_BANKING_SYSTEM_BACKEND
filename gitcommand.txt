@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDING BILLING FUNCTIONALITIES TO THE PROJECT BACKEND SHOWBILL AND BILLING ADDED "
+git commit -m "COMBINING BILLING FRONTEND WITH THE BACKEND "
 git status
 git push -u origin main
 
