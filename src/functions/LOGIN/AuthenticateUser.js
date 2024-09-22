@@ -1,11 +1,9 @@
 import { pool, bcrypt, jwt, secret } from "../../../index.js";
+import { setGemail } from "./getUserEmail.js";
 
 export const authenticateToken = (req, res, next)=> {
-    // console.log('Cookies in request:', req.cookies); // Log the cookies
   
-    const token = req.cookies.token; // Retrieve token from cookies
-    // console.log('Token:', req.cookies.token); // Log the token for debugging
-    // console.log('I AM CALLED YOU DONT WORRY');
+    const token = req.cookies.token;
   
     if (!token) {
       return res.redirect('/login'); 
@@ -18,7 +16,9 @@ export const authenticateToken = (req, res, next)=> {
       }
       console.log('Token Verified:', user);
   
-      req.user = user; // Attach decoded user to request
-      next(); // Proceed to the next middleware
+      req.user = user; 
+console.log(` AUTHENTICATED AS DNE HIS WORK BY ADDING THE EMAIL ${user.data.email}`);
+     setGemail(user.data.email);
+      next(); 
     });
   };

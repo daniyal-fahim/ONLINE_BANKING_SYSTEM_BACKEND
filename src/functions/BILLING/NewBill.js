@@ -1,6 +1,6 @@
 import { pool, } from "../../../index.js";
-
-var Gemail = "DANI@GM";
+import { getGemail } from "../LOGIN/getUserEmail.js";
+var Gemail = getGemail();
 
 const data = {};
 export const billing = async (req, res) => {

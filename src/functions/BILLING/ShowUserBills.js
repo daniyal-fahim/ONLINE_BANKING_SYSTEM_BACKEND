@@ -1,9 +1,9 @@
 import { pool, } from "../../../index.js";
-
+import { getGemail } from "../LOGIN/getUserEmail.js";
 
 export const showBills = async (req, res) => {
-    const { email, password } = req.body;
-  
+    // const { email} = req.body;
+    var email=getGemail();
     try {
       // Query to check if the user exists and get the hashed password
       const userResult = await pool.query(
@@ -13,8 +13,6 @@ export const showBills = async (req, res) => {
   
       if (userResult.rows.length > 0) {
         const user = userResult.rows[0];
-          // Passwords match, fetch the user's bills
-          console.log("Authentication successful");
   
           const billsResult = await pool.query(
             "SELECT * FROM bills WHERE email = $1",
@@ -23,10 +21,10 @@ export const showBills = async (req, res) => {
   
           if (billsResult.rows.length > 0) {
             // Send the bills in the response
-            res.json(billsResult.rows);
+            res.json({ bills: billsResult.rows, ok: true });
           } else {
             // No bills found for the user
-            res.status(404).json({ message: "No bills found for this user" });
+            res.status(404).json({ bills:[], ok: false });
           }
       
       } else {

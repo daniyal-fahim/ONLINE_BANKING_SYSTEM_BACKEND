@@ -1,8 +1,10 @@
 import { pool } from "../../../index.js";
-
-var Gemail = "DANI@GM";
+import { getGemail } from "../LOGIN/getUserEmail.js";
+ 
 
 export const getbalance = async (req, res) => {
+  let Gemail = getGemail();
+  console.log(Gemail);
     var email=Gemail;
    console.log("SOMEONE IS CALLING ME FOR GETTING THE BALANCE");
    const temp = await pool.query("SELECT balance FROM users WHERE email = $1", [

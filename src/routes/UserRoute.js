@@ -9,6 +9,7 @@ import { find } from '../functions/LOGIN/FindUser.js';
 import { register } from "../functions/LOGIN/RegisterUser.js"
 import { delete1 } from "../functions/LOGIN/DeleteUser.js"
 import {authenticateToken} from "../functions/LOGIN/AuthenticateUser.js"
+import { getEmail } from '../functions/LOGIN/getUserEmail.js';
 
 //SAMPLE BILLING ROUTE
 import{billing} from "../functions/BILLING/NewBill.js";
@@ -27,13 +28,15 @@ router.post("/register", register);
 
 router.use(authenticateToken);
 
+router.get("/getemail",getEmail)
+
 router.post("/find", find);
 
 router.post("/delete",delete1);
 
 router.post("/billing",billing);
 
-router.post("/showbill",showBills);
+router.get("/showbill",showBills);
 
 router.get("/getbalance",getbalance);
 

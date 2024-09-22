@@ -1,5 +1,8 @@
 import { pool, bcrypt, jwt, secret } from "../../../index.js";
-var Gemail;
+
+
+import { setGemail } from "./getUserEmail.js";
+
 
 export const login = async (req, res) => {
 
@@ -15,7 +18,8 @@ export const login = async (req, res) => {
       const match = await bcrypt.compare(password, user.password);
 
       if (match) {
-        Gemail = email;
+       var Gemail = email;
+        setGemail(email);
 
         var data = {
           email,
