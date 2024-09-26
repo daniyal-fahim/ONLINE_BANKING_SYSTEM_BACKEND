@@ -1,6 +1,7 @@
 import express from "express";
 import bodyparser from "body-parser";
 import pkg from "pg";
+import nodemailer from "nodemailer";
 const { Pool } = pkg;
 import bcrypt from "bcryptjs";
 import userRouter from "./src/routes/UserRoute.js"
@@ -18,6 +19,14 @@ const secret = 'your_secret_key';
 const app = express();
 const port = 5000; //BACKEND RUNNING AT 5000
 
+//configuring node mailer
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Use Gmail service
+  auth: {
+    user: "daniyal237fahim@gmail.com", // Your Gmail email (hardcoded)
+    pass: "amwx bdap dynn lzzi", // Your Gmail password or App Password (hardcoded)
+  },
+});
  //Configuring the Postgres server as pool
 const pool = new Pool({
   user: "postgres",
@@ -44,4 +53,4 @@ app.listen(port, (req, res) => {
 
 
 
-export { pool, bcrypt,jwt,secret };
+export { pool, bcrypt,jwt,secret ,transporter};

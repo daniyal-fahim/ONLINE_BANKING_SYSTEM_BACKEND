@@ -16,6 +16,9 @@ import{billing} from "../functions/BILLING/NewBill.js";
 import { showBills } from '../functions/BILLING/ShowUserBills.js';
 import { getbalance } from '../functions/BILLING/getBalance.js';
 
+//sample otp ROUTE
+import { EmailSender } from '../functions/OTP/EmailSender.js';
+import { CheckOTP } from '../functions/OTP/CheckOTP.js';
 
 router.get('/', (req, res) => {
   res.json({ message: 'User route' });
@@ -40,4 +43,8 @@ router.get("/showbill",showBills);
 
 router.get("/getbalance",getbalance);
 
+
+router.post("/sendemail",EmailSender);
+
+router.post("/checkotp",CheckOTP);
 export default router;
