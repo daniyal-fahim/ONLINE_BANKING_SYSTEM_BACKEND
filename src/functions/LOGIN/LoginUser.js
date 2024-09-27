@@ -16,13 +16,14 @@ export const login = async (req, res) => {
     if (result.rows.length > 0) {
       const user = result.rows[0];
       const match = await bcrypt.compare(password, user.password);
+      const user_id=user.user_id;
 
       if (match) {
        var Gemail = email;
         setGemail(email);
 
         var data = {
-          email,
+          user_id,
         };
 
         var token = jwt.sign(

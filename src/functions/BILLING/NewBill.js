@@ -1,55 +1,76 @@
 import { pool, } from "../../../index.js";
-import { getGemail } from "../LOGIN/getUserEmail.js";
-var Gemail = getGemail();
-
+import { getGId } from "../LOGIN/getUserId.js";
+// user_id
+// amount
+// ,address
+// ,account_number
+// ,selected_emails
+// ,select_type
+// ,bill_month
+// ,selected_company
+// ,username
+// ,email
 const data = {};
 export const billing = async (req, res) => {
-  const { selectedBill, Id, Amount,Company, Username, Check, Month, Email, Address } =
+  const { selectedBill, accnum, amount,company, username, check, month, email, address } =
     req.body;
-  const selectedCompany = Company; // Set selectedCompany
+
+  let user_id=getGId();
+  const selectedCompany = company; // Set selectedCompany
   var newbal;
-  // const Check=true;
-  //const Gemail = Email; // Assuming Gemail is the same as Email from req.body
+  
 
   try {
     // Check if the user has enough balance
     const temp = await pool.query(
-      "SELECT balance FROM users WHERE email = $1",
-      [Gemail]
+      "SELECT balance,minbal,maxbal FROM balance WHERE user_id = $1",
+      [user_id]
     );
-
+  var minbal;
+  var maxbal;
     if (temp.rows.length > 0) {
       const user = temp.rows[0];
       console.log(user.balance);
       newbal = user.balance;
-      if (Number(user.balance) > Number(Amount)) 
+      minbal= user.minbal;
+      maxbal=user.maxbal;
+      
+      
+      if (Number(user.balance) > Number(amount)) 
         {
         // Insert into the bills table
         await pool.query(
-          'INSERT INTO bills (selectedBill, selectedCompany, AccNum, Amount, Username, Month1, BillEmail, "Check", Address, Email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+          'INSERT INTO bills ( "termscheck",user_id, amount,address,account_number,select_type,bill_month,selected_company,username ,email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
           [
+            check,
+            user_id,
+            amount,
+            address,
+            accnum,
             selectedBill,
+            month,
             selectedCompany,
-            Id,
-            Amount,
-            Username,
-            Month,
-            Email,
-            Check,
-            Address,
-            Gemail,
+            username,
+            email
           ]
         );
+        let balance=newbal;
+        balance = balance - amount;
+         if(balance < minbal){
+              minbal=balance;
+         }
+         else if(balance>maxbal){
+            maxbal=balance;
+         }
 
-        // Optionally update the user's balance by deducting the bill amount
-        await pool.query(
-          "UPDATE users SET balance = balance - $1 WHERE email = $2",
-          [Amount, Gemail]
+         await pool.query(
+          "UPDATE balance SET balance = $1, minbal = $2, maxbal = $3 WHERE user_id = $4",
+          [balance, minbal, maxbal, user_id]
         );
 
         const temp = await pool.query(
-          "SELECT balance FROM users WHERE email = $1",
-          [Gemail]
+          "SELECT balance FROM balance WHERE user_id = $1",
+          [user_id]
         );
 
         if (temp.rows.length > 0) {

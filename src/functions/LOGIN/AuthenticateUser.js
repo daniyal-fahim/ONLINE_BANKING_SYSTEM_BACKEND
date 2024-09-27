@@ -1,5 +1,5 @@
 import { pool, bcrypt, jwt, secret } from "../../../index.js";
-import { setGemail } from "./getUserEmail.js";
+import { setGId } from "./getUserId.js";
 
 export const authenticateToken = (req, res, next)=> {
   
@@ -18,7 +18,7 @@ export const authenticateToken = (req, res, next)=> {
   
       req.user = user; 
 console.log(` AUTHENTICATED AS DNE HIS WORK BY ADDING THE EMAIL ${user.data.email}`);
-     setGemail(user.data.email);
+     setGId(user.data.user_id);
       next(); 
     });
   };

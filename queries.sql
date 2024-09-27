@@ -1,41 +1,79 @@
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE,
-    password VARCHAR(255),
-    fname VARCHAR(50),
-    lname VARCHAR(50),
-    nationality VARCHAR(50),
-    gender VARCHAR(10)
+DROP TABLE USERS;
+DROP TABLE ADMINISTRATION;
+DROP TABLE BILLS
+DROP TABLE BALANCE
+
+
+--USERS TABLE
+CREATE TABLE users( 
+  USER_ID 	 SERIAL UNIQUE ,
+  ACCOUNT_NUMBER VARCHAR(20),
+  EMAIL	VARCHAR(50),
+  PASSWORD	VARCHAR(60),  
+  FNAME	VARCHAR(30),
+  LNAME	VARCHAR(30),
+  CNIC  VARCHAR(15),
+  GENDER VARCHAR(10),
+  NATIONALITY VARCHAR(30),
+  DOB	DATE,  
+  JOINED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UPDATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Update timestamp automatically on row modification
+  INFO TEXT,
+  Approved  BOOL DEFAULT FALSE,
+  PRIMARY KEY (CNIC,USER_ID)
+);
+ALTER TABLE users
+ADD CONSTRAINT UNIQUE_EMAIL UNIQUE (EMAIL);
+ALTER TABLE users
+ADD CONSTRAINT UNIQUE_ACC UNIQUE (ACCOUNT_NUMBER);
+ALTER TABLE users
+ALTER COLUMN account_number SET DATA TYPE VARCHAR(30);
+
+--ADMINISTRATION TABLE
+CREATE TABLE administration( 
+  ADMIN_ID 	 SERIAL UNIQUE,
+  Designation VARCHAR(20),
+  EMAIL	VARCHAR(50),
+  PASSWORD	VARCHAR(60),  
+  FNAME	VARCHAR(30),
+  LNAME	VARCHAR(30),
+  CNIC  VARCHAR(15),
+  GENDER VARCHAR(10),
+  NATIONALITY VARCHAR(30),
+  DOB	DATE,  
+  JOINED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UPDATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
+  Approved  BOOL DEFAULT FALSE,
+  PRIMARY KEY (CNIC, ADMIN_ID)
 );
 
-ALTER TABLE users RENAME COLUMN username TO email;
+--BALANCE TABLE
+CREATE TABLE BALANCE (
+  USER_ID INT NOT NULL UNIQUE, 
+  BALANCE DECIMAL(15, 2),
+  MAXBAL DECIMAL(15, 2),
+  MINBAL DECIMAL(15, 2),
+  PRIMARY KEY (USER_ID),
+  FOREIGN KEY (USER_ID) REFERENCES users(USER_ID) 
+  );
 
-CREATE TABLE bills (
-  selectedBill VARCHAR(255), -- Define the data type for selectedBill
-  selectedCompany VARCHAR(255),
-  Id SERIAL PRIMARY KEY,       -- Id as the primary key with auto-increment
-  Amount DECIMAL(10, 2),       -- Assuming Amount is a decimal with 2 decimal places
-  Username VARCHAR(255),       -- Username, which will be a foreign key
-  Month1 VARCHAR(50),           -- Define the data type for Month
-  BillEmail VARCHAR(255),          -- Define the data type for Email
-  "Check" BOOLEAN,             -- Use BOOLEAN for Check to represent true/false
-  Address VARCHAR(90),         -- Address with a maximum length of 90 characters
-  Email VARCHAR(90),
-  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP, -- Automatically save the date and time
- CONSTRAINT fk_username FOREIGN KEY (Email) REFERENCES users(email)
+--BILLING
+
+CREATE TABLE BILLS (
+  user_id INT NOT NULL,         
+  bill_id  SERIAL PRIMARY KEY,                  
+  username VARCHAR(100) NOT NULL,                             
+  email VARCHAR(100) NOT NULL,                 
+  address VARCHAR(255) NOT NULL,               
+  account_number VARCHAR(20) NOT NULL,         
+  termscheck bool,
+  paid_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
+  bill_month VARCHAR(50) NOT NULL,              
+  selected_company VARCHAR(100) NOT NULL,      
+  select_type VARCHAR(50) NOT NULL,            
+  amount FLOAT NOT NULL,
+  FOREIGN KEY (USER_ID) REFERENCES users(USER_ID) 
+
+
 );
-
-
-ALTER TABLE users ADD COLUMN balance DECIMAL(10, 2) DEFAULT 0.00;
-
-ALTER TABLE users ADD COLUMN created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
-
-ALTER TABLE bills ADD COLUMN AccNum text
-
-select * from bills
-
-select * from users
-
-UPDATE users
-SET balance = 50000;
  

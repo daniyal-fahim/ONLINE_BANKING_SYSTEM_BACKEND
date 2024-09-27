@@ -1,14 +1,12 @@
 import { pool } from "../../../index.js";
-import { getGemail } from "../LOGIN/getUserEmail.js";
- 
+import { getGId } from "../LOGIN/getUserId.js"; 
 
 export const getbalance = async (req, res) => {
-  let Gemail = getGemail();
-  console.log(Gemail);
-    var email=Gemail;
+  let GId = getGId();
+  console.log(GId);
    console.log("SOMEONE IS CALLING ME FOR GETTING THE BALANCE");
-   const temp = await pool.query("SELECT balance FROM users WHERE email = $1", [
-     email,
+   const temp = await pool.query("SELECT balance FROM balance WHERE user_id = $1", [
+     GId,
    ]);
    try {
      if (temp.rows.length > 0) {
