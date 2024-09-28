@@ -1,15 +1,6 @@
 import { pool, } from "../../../index.js";
 import { getGId } from "../LOGIN/getUserId.js";
-// user_id
-// amount
-// ,address
-// ,account_number
-// ,selected_emails
-// ,select_type
-// ,bill_month
-// ,selected_company
-// ,username
-// ,email
+
 const data = {};
 export const billing = async (req, res) => {
   const { selectedBill, accnum, amount,company, username, check, month, email, address } =
