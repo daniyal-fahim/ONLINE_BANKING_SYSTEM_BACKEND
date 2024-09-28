@@ -46,7 +46,12 @@ CREATE TABLE administration(
   Approved  BOOL DEFAULT FALSE,
   PRIMARY KEY (CNIC, ADMIN_ID)
 );
+ALTER TABLE administration
+ADD CONSTRAINT UNIEMAIL UNIQUE (EMAIL);
 
+
+ALTER TABLE administration
+ADD column info text;
 --BALANCE TABLE
 CREATE TABLE BALANCE (
   USER_ID INT NOT NULL UNIQUE, 
@@ -77,3 +82,16 @@ CREATE TABLE BILLS (
 
 );
  
+
+ --HISTORY TABLE
+
+
+CREATE TABLE history (
+    history_id SERIAL PRIMARY KEY, 
+    user_id INT NOT NULL,
+    bill_id INT DEFAULT NULL,
+    transaction_id INT DEFAULT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (bill_id) REFERENCES bills(bill_id)
+);
+

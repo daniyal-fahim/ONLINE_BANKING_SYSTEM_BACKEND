@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "UPDATED THE DATABASE SCHEMA AND DONE ALL THE UPDATES ACCORDINGLY "
+git commit -m "DONE ALL THE MANAGER ROUTE FUNCTIONS AND WORK "
 git status
 git push -u origin main
 

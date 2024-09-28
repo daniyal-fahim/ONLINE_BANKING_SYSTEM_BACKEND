@@ -1,24 +1,24 @@
 import { pool, bcrypt, jwt, secret } from "../../../index.js";
 
-import { setGId } from "./getUserId.js";
+import { setGId } from "../LOGIN/getUserId.js";
 
-export const login = async (req, res) => {
+export const loginManager = async (req, res) => {
 
   const { email, password } = req.body;
   try {
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [
+    const result = await pool.query("SELECT * FROM administration WHERE email = $1", [
       email,
     ]);
 
     // Check if the user exists
     if (result.rows.length > 0) {
-      const user = result.rows[0];
-      const match = await bcrypt.compare(password, user.password);
-      const user_id=user.user_id;
+      const manager = result.rows[0];
+      const match = await bcrypt.compare(password, manager.password);
+      const admin_id=manager.admin_id;
 
       if (match) {
-        setGId(user_id);
-
+        setGId(admin_id);
+        var user_id=admin_id;
         var data = {
           user_id,
         };

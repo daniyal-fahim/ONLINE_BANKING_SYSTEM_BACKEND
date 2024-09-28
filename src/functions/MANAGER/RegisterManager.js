@@ -23,7 +23,7 @@ const checkDuplicateAcc = async () => {
   }
 }
 
-export const register = async (req, res) => {
+export const registerManager = async (req, res) => {
   const {
     dob,
     fname,
@@ -33,20 +33,20 @@ export const register = async (req, res) => {
     info,
     gender,
     email,
+    designation,
     password,
   } = req.body;
-  //dob,fname,lname,cnic,nationality,info,gender,account_number,email,password;
+  //dob,fname,lname,cnic,nationality,info,gender,designation,email,password;
 
   try {
 
-    let account_number = await checkDuplicateAcc();
 
     // Check if the user already exists
-    const userExists = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
+    const ManagerExists = await pool.query(
+      "SELECT * FROM administration WHERE email = $1",
       [email]
     );
-    if (userExists.rows.length > 0) {
+    if (ManagerExists.rows.length > 0) {
       return res.status(400).json({ message: "Email already exists" });
     }
 
@@ -55,11 +55,11 @@ export const register = async (req, res) => {
 
     
     await pool.query(
-      "INSERT INTO users (dob,fname,lname,cnic,nationality,info,gender,account_number,email,password) VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10)",
-      [dob,fname,lname,cnic,nationality,info,gender,account_number,email,hashedPassword]
+      "INSERT INTO administration (dob,fname,lname,cnic,nationality,info,gender,designation,email,password) VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10)",
+      [dob,fname,lname,cnic,nationality,info,gender,designation,email,hashedPassword]
     );
 
-    res.status(200).json({ message: "User registered successfully" });
+    res.status(200).json({ message: "Adminstration registered successfully" });
   } catch (err) {
     console.error(err.message);
     let msg="Server error "+err.message ;

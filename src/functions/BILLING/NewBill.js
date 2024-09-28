@@ -39,8 +39,8 @@ export const billing = async (req, res) => {
       if (Number(user.balance) > Number(amount)) 
         {
         // Insert into the bills table
-        await pool.query(
-          'INSERT INTO bills ( "termscheck",user_id, amount,address,account_number,select_type,bill_month,selected_company,username ,email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+       const result= await pool.query(
+          'INSERT INTO bills ( "termscheck",user_id, amount,address,account_number,select_type,bill_month,selected_company,username ,email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING bill_id',
           [
             check,
             user_id,
@@ -54,6 +54,9 @@ export const billing = async (req, res) => {
             email
           ]
         );
+        //geting the bill id
+        const billId = result.rows[0].bill_id;
+
         let balance=newbal;
         balance = balance - amount;
          if(balance < minbal){
@@ -68,6 +71,10 @@ export const billing = async (req, res) => {
           [balance, minbal, maxbal, user_id]
         );
 
+        await pool.query(
+          'insert into history (user_id,bill_id,transaction_id) VALUES ($1,$2,$3) ',
+          [user_id,billId,null]
+        );
         const temp = await pool.query(
           "SELECT balance FROM balance WHERE user_id = $1",
           [user_id]

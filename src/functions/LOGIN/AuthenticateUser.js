@@ -17,7 +17,7 @@ export const authenticateToken = (req, res, next)=> {
       console.log('Token Verified:', user);
   
       req.user = user; 
-console.log(` AUTHENTICATED AS DNE HIS WORK BY ADDING THE EMAIL ${user.data.email}`);
+console.log(` AUTHENTICATED AS DoNE HIS WORK BY ADDING THE EMAIL ${user.data.user_id}`);
      setGId(user.data.user_id);
       next(); 
     });

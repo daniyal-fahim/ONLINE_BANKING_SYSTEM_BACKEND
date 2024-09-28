@@ -23,6 +23,7 @@ export const find = async (req, res) => {
       }
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ message: "Server error" });
+      let msg="Server error "+err.message ;
+     res.status(500).json({ message: msg  });
     }
   };

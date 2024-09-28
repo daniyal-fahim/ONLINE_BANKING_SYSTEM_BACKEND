@@ -20,17 +20,31 @@ import { getbalance } from '../functions/BILLING/getBalance.js';
 import { EmailSender } from '../functions/OTP/EmailSender.js';
 import { CheckOTP } from '../functions/OTP/CheckOTP.js';
 
+
+//sample manager routes
+import { registerManager } from '../functions/MANAGER/RegisterManager.js';
+import { loginManager } from '../functions/MANAGER/LoginManager.js';
+import { deleteManager } from '../functions/MANAGER/DeleteManager.js';
+import { findManager } from '../functions/MANAGER/FindManager.js';
+
+import { getAllUnauthorized } from '../functions/MANAGER/getverified.js';
+
+
 router.get('/', (req, res) => {
   res.json({ message: 'User route' });
 });
 
 //Authentication
 router.post("/login", login);
-
 router.post("/register", register);
+
+router.post("/registermanager",registerManager);
+router.post("/loginmanager",loginManager);
+
 
 router.use(authenticateToken);
 
+//user route
 router.get("/getemail",getEmail)
 
 router.post("/find", find);
@@ -38,13 +52,23 @@ router.post("/find", find);
 router.post("/delete",delete1);
 
 router.post("/billing",billing);
+//manager routes
+router.post("/findmanager",findManager);
+
+router.post("/deletemanager",deleteManager);
+
+router.get("/getunapprove",getAllUnauthorized);
+
+//billing route
 
 router.get("/showbill",showBills);
 
 router.get("/getbalance",getbalance);
 
-
+//OTP ROUTE
 router.post("/sendemail",EmailSender);
 
 router.post("/checkotp",CheckOTP);
+
+
 export default router;

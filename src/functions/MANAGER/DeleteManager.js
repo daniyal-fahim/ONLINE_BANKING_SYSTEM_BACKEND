@@ -1,9 +1,9 @@
 import { pool, bcrypt} from "../../../index.js";
 
 
-export const delete1 = async (req, res) => {
+export const deleteManager = async (req, res) => {
     const { email, password } = req.body;
-    const temp = await pool.query("SELECT * FROM users WHERE email = $1", [
+    const temp = await pool.query("SELECT * FROM administration WHERE email = $1", [
       email,
     ]);
     try {
@@ -13,8 +13,8 @@ export const delete1 = async (req, res) => {
         if (match) {
           // Passwords match
           console.log("Authentication successful");
-          res.send("USER HAS BEERM DELETED SUCCESSFULLY");
-          const temp1 = await pool.query("DELETE FROM users WHERE email = $1", [
+          res.send("ADMIN HAS BEERM DELETED SUCCESSFULLY");
+          const temp1 = await pool.query("DELETE FROM administration WHERE email = $1", [
             email,
           ]);
         } else {
@@ -27,7 +27,7 @@ export const delete1 = async (req, res) => {
       }
     } catch (err) {
       console.error(err.message);
-      let msg="Server error "+err.message ;
-       res.status(500).json({ message: msg  });
+      let msg="Server error"+err.message ;
+      res.status(500).json({ message: msg  });
     }
   };
