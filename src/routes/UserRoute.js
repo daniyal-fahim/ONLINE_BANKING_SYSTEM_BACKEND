@@ -28,7 +28,24 @@ import { deleteManager } from '../functions/MANAGER/DeleteManager.js';
 import { findManager } from '../functions/MANAGER/FindManager.js';
 
 import { getAllUnauthorized } from '../functions/MANAGER/getverified.js';
+//getting all user getter
+import { getuseraccountnumber,getusercnic,getuseremail,getuserfname,getuserupdatetime,getuserjoindate,getuserid } from '../functions/LOGIN/userallgetter.js';
+import { getusernationality,getuserlname,getuserinfo,getuserapproval,getuserdob } from '../functions/LOGIN/userallgetter.js';
 
+
+import { generateid } from '../functions/generatenewid.js';
+//just checking
+router.get("/generateid",generateid);
+
+//admin getter route
+router.get('/',);
+router.get('/',);
+router.get('/',);
+router.get('/',);
+router.get('/',);
+router.get('/',);
+router.get('/',);
+router.get('/',);
 
 router.get('/', (req, res) => {
   res.json({ message: 'User route' });
@@ -70,5 +87,18 @@ router.post("/sendemail",EmailSender);
 
 router.post("/checkotp",CheckOTP);
 
+
+router.get('/getuseraccountnumber',getuseraccountnumber);
+router.get('/getusercnic',getusercnic);
+router.get('/getuseremail',getuseremail);
+router.get('/getuserfname',getuserfname);
+router.get('/getuserupdatetime',getuserupdatetime);
+router.get('/getuserjoindate',getuserjoindate);
+router.get('/getuserid',getuserid);
+router.get('/getusernationality',getusernationality);
+router.get('/getuserlname',getuserlname);
+router.get('/getuserinfo',getuserinfo);
+router.get('/getuserapproval',getuserapproval);
+router.get('/getuserdob',getuserdob);
 
 export default router;

@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
-  database: "BANKING WORLD",
+  database: "D_PAY",//"BANKING WORLD",
   password: "FAST",
   port: 5432,
 });

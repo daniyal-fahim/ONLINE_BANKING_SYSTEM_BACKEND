@@ -1,6 +1,60 @@
 import { pool, } from "../../../index.js";
 import { getGId } from "../LOGIN/getUserId.js";
 
+
+//generate unique bill_id
+const getIdNum = () => {
+  let Id = '';  // Use a meaningful variable name
+  Id+='B-'
+  for (let i = 0; i < 4; i++) {
+    Id +=Math.floor(Math.random() * 10).toString();  // Generate a digit from 0-9
+  }
+  return Id;  // Return the generated account number
+}
+
+const checkDuplicateId = async () => {
+  let Id = getIdNum();  // Get a new account number
+  const checkAcc = await pool.query(
+    "SELECT * FROM bills WHERE bill_id = $1",
+    [Id]
+  );
+
+  if (checkAcc.rows.length > 0 ) {
+    console.log(Id);
+    return await checkDuplicateId();  
+  } else {
+    return Id;  
+  }
+}
+
+//generate unique history_id
+const getIdNum2 = () => {
+  let Id = '';  // Use a meaningful variable name
+  Id+='HS-'
+  for (let i = 0; i < 4; i++) {
+    Id +=Math.floor(Math.random() * 10).toString();  // Generate a digit from 0-9
+  }
+  return Id;  // Return the generated account number
+}
+
+const checkDuplicateId2 = async () => {
+  let Id = getIdNum2();  // Get a new account number
+  const checkAcc = await pool.query(
+    "SELECT * FROM history WHERE history_id = $1",
+    [Id]
+  );
+
+  if (checkAcc.rows.length > 0 ) {
+    console.log(Id);
+    return await checkDuplicateId2();  
+  } else {
+    return Id;  
+  }
+}
+
+
+
+
 const data = {};
 export const billing = async (req, res) => {
   const { selectedBill, accnum, amount,company, username, check, month, email, address } =
@@ -9,7 +63,7 @@ export const billing = async (req, res) => {
   let user_id=getGId();
   const selectedCompany = company; // Set selectedCompany
   var newbal;
-  
+  const bill_id=await checkDuplicateId();
 
   try {
     // Check if the user has enough balance
@@ -31,8 +85,9 @@ export const billing = async (req, res) => {
         {
         // Insert into the bills table
        const result= await pool.query(
-          'INSERT INTO bills ( "termscheck",user_id, amount,address,account_number,select_type,bill_month,selected_company,username ,email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING bill_id',
+          'INSERT INTO bills ( bill_id,"termscheck",user_id, amount,address,account_number,select_type,bill_month,selected_company,username ,email) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,$11) RETURNING bill_id',
           [
+            bill_id,
             check,
             user_id,
             amount,
@@ -61,10 +116,11 @@ export const billing = async (req, res) => {
           "UPDATE balance SET balance = $1, minbal = $2, maxbal = $3 WHERE user_id = $4",
           [balance, minbal, maxbal, user_id]
         );
-
+        //getting and creating history id
+          const history_id=await checkDuplicateId2();
         await pool.query(
-          'insert into history (user_id,bill_id,transaction_id) VALUES ($1,$2,$3) ',
-          [user_id,billId,null]
+          'insert into history (history_id,user_id,bill_id,transaction_id) VALUES ($1,$2,$3,$4) ',
+          [history_id,user_id,billId,null]
         );
         const temp = await pool.query(
           "SELECT balance FROM balance WHERE user_id = $1",

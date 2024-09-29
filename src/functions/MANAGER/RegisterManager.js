@@ -1,25 +1,30 @@
 import { pool, bcrypt } from "../../../index.js";
 
-const getAccNum = () => {
-  let accountNumber = '';  // Use a meaningful variable name
-  for (let i = 0; i < 13; i++) {
-    accountNumber += Math.floor(Math.random() * 10);  // Generate a digit from 0-9
+//generate unique admin_id
+const getIdNum = () => {
+  let Id = '';  // Use a meaningful variable name
+  Id+='AD-'
+  for (let i = 0; i < 4; i++) {
+    Id +=Math.floor(Math.random() * 10).toString();  // Generate a digit from 0-9
   }
-  return accountNumber;  // Return the generated account number
+  return Id;  // Return the generated account number
 }
 
-const checkDuplicateAcc = async () => {
-  let account_number = getAccNum();  // Get a new account number
+const checkDuplicateId = async () => {
+  let Id = getIdNum();  // Get a new account number
   const checkAcc = await pool.query(
-    "SELECT * FROM users WHERE account_number = $1",
-    [account_number]
+    "SELECT * FROM users WHERE user_id = $1",
+    [Id]
   );
-
-  if (checkAcc.rows.length > 0) {
-    console.log(account_number);
-    return checkDuplicateAcc();  
+  const checkAcc2 = await pool.query(
+    "SELECT * FROM administration WHERE admin_id = $1",
+    [Id]
+  );
+  if (checkAcc.rows.length > 0 ||checkAcc2.rows.length > 0 ) {
+    console.log(Id);
+    return await checkDuplicateId();  
   } else {
-    return account_number;  
+    return Id;  
   }
 }
 
@@ -41,6 +46,8 @@ export const registerManager = async (req, res) => {
   try {
 
 
+    const admin_id=await checkDuplicateId();
+
     // Check if the user already exists
     const ManagerExists = await pool.query(
       "SELECT * FROM administration WHERE email = $1",
@@ -55,8 +62,8 @@ export const registerManager = async (req, res) => {
 
     
     await pool.query(
-      "INSERT INTO administration (dob,fname,lname,cnic,nationality,info,gender,designation,email,password) VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10)",
-      [dob,fname,lname,cnic,nationality,info,gender,designation,email,hashedPassword]
+      "INSERT INTO administration (admin_id,dob,fname,lname,cnic,nationality,info,gender,designation,email,password) VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+      [admin_id,dob,fname,lname,cnic,nationality,info,gender,designation,email,hashedPassword]
     );
 
     res.status(200).json({ message: "Adminstration registered successfully" });
