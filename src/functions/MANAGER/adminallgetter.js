@@ -30,7 +30,7 @@ export const getadminlname = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT lname FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -52,7 +52,7 @@ export const getadminemail = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT email FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -74,7 +74,7 @@ export const getadmincnic = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT cnic FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -95,7 +95,7 @@ export const getadminnationality = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT nationality FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -117,7 +117,7 @@ export const getadmindesignation = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT designation FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -138,7 +138,7 @@ export const getadmindob = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT dob FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -159,7 +159,7 @@ export const getadminjoindate = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT joined FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -181,7 +181,7 @@ export const getadminupdatetime = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT updated FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -203,7 +203,7 @@ export const getadmininfo = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT info FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];
@@ -225,7 +225,7 @@ export const getadminapproval = async (req, res) => {
     }
     
     try {
-        const temp = await pool.query('SELECT fname FROM admins WHERE admin_id = $1', [admin_id]);
+        const temp = await pool.query('SELECT approved FROM admins WHERE admin_id = $1', [admin_id]);
 
         if (temp.rows.length > 0) {
             const admin = temp.rows[0];

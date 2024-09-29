@@ -4,7 +4,9 @@ DROP TABLE IF EXISTS BILLS;
 DROP TABLE IF EXISTS BALANCE;
 DROP TABLE IF EXISTS administration;
 DROP TABLE IF EXISTS users;
-
+select * from users
+select * from balance
+select * from history
 -- USERS TABLE
 CREATE TABLE users( 
   USER_ID VARCHAR(12) UNIQUE NOT NULL,

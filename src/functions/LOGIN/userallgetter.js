@@ -14,7 +14,7 @@ export const getuserfname = async (req, res) => {
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
             console.log(user.fname);
-            res.json(user.fname);
+            res.json({fname: user.fname });
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -36,7 +36,7 @@ export const getuserlname = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
-            res.json(user.lname);
+            res.json({lname:user.lname});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -46,7 +46,29 @@ export const getuserlname = async (req, res) => {
         res.status(500).json({ message: msg });
     }
 };
+export const getuserfullname = async (req, res) => {
+    const user_id = getGId();
+    if (!user_id) {
+        return res.status(400).json({ message: "Invalid user ID" });
+    }
+    
+    try {
+        const temp = await pool.query('SELECT lname,fname,email FROM users WHERE user_id = $1', [user_id]);
 
+        if (temp.rows.length > 0) {
+            const user = temp.rows[0];
+            const name=user.fname+' '+user.lname;
+            res.json({fullname:name,
+            email:user.email});
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        console.error(err.message);
+        let msg = "Server error: " + err.message;
+        res.status(500).json({ message: msg });
+    }
+};
 export const getuseremail = async (req, res) => {
     const user_id = getGId();
     if (!user_id) {
@@ -58,7 +80,9 @@ export const getuseremail = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user1 = temp.rows[0];
-            res.json(user1.email);
+            var email=user1.email;
+            res.json({ email: email }); 
+            console.log("email is retrieved :"+email);
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -80,7 +104,7 @@ export const getusercnic = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user1 = temp.rows[0];
-            res.json(user1.cnic);
+            res.json({cnic:user1.cnic});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -101,7 +125,7 @@ export const getusernationality = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user1 = temp.rows[0];
-            res.json(user1.nationality);
+            res.json({nationality:user1.nationality});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -123,7 +147,7 @@ export const getuseraccountnumber = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user1 = temp.rows[0];
-            res.json(user1.account_number);
+            res.json({account_number:user1.account_number});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -144,7 +168,7 @@ export const getuserdob = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user1 = temp.rows[0];
-            res.json(user1.dob);
+            res.json({dob:user1.dob});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -165,7 +189,7 @@ export const getuserjoindate = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
-            res.json(user.joined);
+            res.json({joined:user.joined});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -187,7 +211,7 @@ export const getuserupdatetime = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
-            res.json(user.updated);
+            res.json({updated:user.updated});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -209,7 +233,7 @@ export const getuserinfo = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
-            res.json(user.info);
+            res.json({info:user.info});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -231,7 +255,7 @@ export const getuserapproval = async (req, res) => {
 
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
-            res.json(user.approved);
+            res.json({approved:user.approved});
         } else {
             res.status(404).json({ message: "User not found" });
         }
@@ -246,6 +270,6 @@ export const getuserid = async (req, res) => {
     if (!user_id) {
         return res.status(400).json({ message: "Invalid user ID" });
     }
-    res.json(user_id);
+    res.json({user_id:user_id});
    
 };

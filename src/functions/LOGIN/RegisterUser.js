@@ -84,7 +84,10 @@ export const register = async (req, res) => {
     await pool.query(
       "INSERT INTO users (user_id,dob,fname,lname,cnic,nationality,info,gender,account_number,email,password) VALUES ($1, $2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
       [user_id,dob,fname,lname,cnic,nationality,info,gender,account_number,email,hashedPassword]
-    );
+    );    
+    
+
+    await pool.query( 'insert into balance values ($1,$2,$3,$4)',[user_id,50000,50000,50000]);
 
     res.status(200).json({ message: "User registered successfully" });
   } catch (err) {

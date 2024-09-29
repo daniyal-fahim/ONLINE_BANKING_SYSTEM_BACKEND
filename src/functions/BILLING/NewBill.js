@@ -135,6 +135,7 @@ export const billing = async (req, res) => {
         res.status(200).json({
           message: "Bill added and balance updated successfully",
           newbal,
+          ok:true
         });
       } else {
         res.status(400).json({ message: "Insufficient balance" });

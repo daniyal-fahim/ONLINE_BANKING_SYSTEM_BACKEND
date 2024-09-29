@@ -30,7 +30,7 @@ import { findManager } from '../functions/MANAGER/FindManager.js';
 import { getAllUnauthorized } from '../functions/MANAGER/getverified.js';
 //getting all user getter
 import { getuseraccountnumber,getusercnic,getuseremail,getuserfname,getuserupdatetime,getuserjoindate,getuserid } from '../functions/LOGIN/userallgetter.js';
-import { getusernationality,getuserlname,getuserinfo,getuserapproval,getuserdob } from '../functions/LOGIN/userallgetter.js';
+import { getuserfullname,getusernationality,getuserlname,getuserinfo,getuserapproval,getuserdob } from '../functions/LOGIN/userallgetter.js';
 
 
 import { generateid } from '../functions/generatenewid.js';
@@ -100,5 +100,7 @@ router.get('/getuserlname',getuserlname);
 router.get('/getuserinfo',getuserinfo);
 router.get('/getuserapproval',getuserapproval);
 router.get('/getuserdob',getuserdob);
+//for user sidebar access
+router.get('/getuserfullname',getuserfullname);
 
 export default router;
