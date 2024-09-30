@@ -32,6 +32,8 @@ import { getAllUnauthorized } from '../functions/MANAGER/getverified.js';
 import { getuseraccountnumber,getusercnic,getuseremail,getuserfname,getuserupdatetime,getuserjoindate,getuserid } from '../functions/LOGIN/userallgetter.js';
 import { getuserfullname,getusernationality,getuserlname,getuserinfo,getuserapproval,getuserdob } from '../functions/LOGIN/userallgetter.js';
 
+//transaction route
+import { interbanktransaction } from '../functions/Transaction/interbanktransaction.js';
 
 import { generateid } from '../functions/generatenewid.js';
 //just checking
@@ -103,4 +105,6 @@ router.get('/getuserdob',getuserdob);
 //for user sidebar access
 router.get('/getuserfullname',getuserfullname);
 
+
+router.post('/interbanktransaction',interbanktransaction);
 export default router;
