@@ -38,8 +38,10 @@ import { interbanktransaction } from '../functions/Transaction/interbanktransact
 import { generateid } from '../functions/generatenewid.js';
 //just checking
 router.get("/generateid",generateid);
+//history router
+import { gethistory } from '../functions/History/getfullhistory.js';
 
-//admin getter route
+//admin getter route work pending in this module
 router.get('/',);
 router.get('/',);
 router.get('/',);
@@ -107,4 +109,7 @@ router.get('/getuserfullname',getuserfullname);
 
 
 router.post('/interbanktransaction',interbanktransaction);
+
+//history
+router.get('/gethistory',gethistory);
 export default router;

@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "INTERBANK TRANSACTION DONE"
+git commit -m "INTERBANK TRANSACTION DONE AND SCHEMA CONNECT WORKING ON HISTORY"
 git status
 git push -u origin main
 

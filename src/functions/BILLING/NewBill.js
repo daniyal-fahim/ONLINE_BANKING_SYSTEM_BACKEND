@@ -37,7 +37,7 @@ const getIdNum2 = () => {
   return Id;  // Return the generated account number
 }
 
-const checkDuplicateId2 = async () => {
+export const checkDuplicateId2 = async () => {
   let Id = getIdNum2();  // Get a new account number
   const checkAcc = await pool.query(
     "SELECT * FROM history WHERE history_id = $1",
