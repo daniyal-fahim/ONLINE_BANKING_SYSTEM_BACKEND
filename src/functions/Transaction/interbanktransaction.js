@@ -1,7 +1,6 @@
 import { pool } from "../../../index.js";
 import { getGId } from "../LOGIN/getUserId.js";
-import { checkDuplicateId2 } from "../BILLING/NewBill.js"; // for historyid
-import { getuseremail, getuseraccountnumber } from "../LOGIN/userallgetter.js";
+import { checkDuplicateId2 } from "../History/getHistoryId.js";
 
 // Generate unique transaction ID
 const getIdNum = () => {

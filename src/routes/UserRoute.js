@@ -39,7 +39,7 @@ import { generateid } from '../functions/generatenewid.js';
 //just checking
 router.get("/generateid",generateid);
 //history router
-import { gethistory } from '../functions/History/getfullhistory.js';
+import { getbillhistory,gettranshistory } from '../functions/History/getfullhistory.js';
 
 //admin getter route work pending in this module
 router.get('/',);
@@ -111,5 +111,6 @@ router.get('/getuserfullname',getuserfullname);
 router.post('/interbanktransaction',interbanktransaction);
 
 //history
-router.get('/gethistory',gethistory);
+router.get('/getbillhistory',getbillhistory);
+router.get('/gettranshistory',gettranshistory);
 export default router;
