@@ -1,13 +1,14 @@
 import { transporter,pool } from "../../../index.js";
 import { setOTP } from "./getOtp.js";
 import { getGemail } from "../LOGIN/getUserEmail.js";
+
 export const EmailSender = async (req, res) => {
   let otp = Math.floor(Math.random() * 99999);
 
   const email=getGemail();
   // Send mail with defined transport object
     var msg=`
-    Dear [Client's Name],
+    Dear User,
 
     I hope this message finds you well.
     

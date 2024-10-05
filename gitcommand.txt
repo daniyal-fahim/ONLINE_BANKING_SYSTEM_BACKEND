@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "just pushing some in progress work"
+git commit -m "ADDED FAQ WHOLE FUNCTIONALITIES"
 git status
 git push -u origin main
 

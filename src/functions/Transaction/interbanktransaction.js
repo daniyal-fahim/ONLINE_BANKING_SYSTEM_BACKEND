@@ -1,29 +1,9 @@
 import { pool } from "../../../index.js";
 import { getGId } from "../LOGIN/getUserId.js";
 import { checkDuplicateId2 } from "../History/getHistoryId.js";
-
+import { checkDuplicateId } from "./getTransactionId.js";
 // Generate unique transaction ID
-const getIdNum = () => {
-  let Id = "TR-";
-  for (let i = 0; i < 4; i++) {
-    Id += Math.floor(Math.random() * 10).toString(); // Generate a digit from 0-9
-  }
-  return Id;
-};
 
-const checkDuplicateId = async () => {
-  let Id = getIdNum();
-  const checkAcc = await pool.query(
-    "SELECT * FROM INTER_BANK_TRANSACTIONS WHERE trans_id = $1",
-    [Id]
-  );
-
-  if (checkAcc.rows.length > 0) {
-    return await checkDuplicateId(); // Recurse to generate a new ID
-  } else {
-    return Id;
-  }
-};
 
 // Main function for interbank transaction
 export const interbanktransaction = async (req, res) => {
