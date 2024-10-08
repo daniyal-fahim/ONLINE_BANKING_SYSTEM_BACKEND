@@ -118,4 +118,38 @@ CREATE TABLE FAQS (
     FOREIGN KEY (USER_ID) REFERENCES users(USER_ID),
     FOREIGN KEY (ADMIN_ID) REFERENCES administration(ADMIN_ID)
 );
---notchecked
+alter table faqs add column Name VARCHAR (100);
+alter table faqs add column Email VARCHAR (100);
+
+--notchecked\
+CREATE TABLE Loans (
+    LOAN_ID INT PRIMARY KEY,
+     USER_ID VARCHAR(12) NOT NULL,
+    LOAN_TYPE VARCHAR(50) NOT NULL,
+    LOAN_AMOUNT DECIMAL(10, 2) NOT NULL,
+    INTEREST_RATE DECIMAL(5, 2) NOT NULL,
+    TENURE INT NOT NULL,
+    INSTALLMENT_AMOUNT DECIMAL(10, 2) NOT NULL,
+    START_DATE DATE DEFAULT CURRENT_TIMESTAMP,
+    END_DATE DATE,
+    STATUS VARCHAR(20) DEFAULT 'PENDING',
+    COLLATERAL VARCHAR(100) DEFAULT NULL,
+    GUARANTOR_NAME VARCHAR(100) DEFAULT NULL,
+    GUARANTOR_CNIC VARCHAR(50) DEFAULT NULL,
+    REPAYMENT_SCHEDULE TEXT DEFAULT NULL,
+    FOREIGN KEY (USER_ID) REFERENCES Users(USER_ID)
+);
+ALTER TABLE loans
+ALTER COLUMN loan_id TYPE VARCHAR(15);
+
+ALTER TABLE loans
+ALTER COLUMN loan_amount TYPE DECIMAL(15,2);
+
+-- Secured Loan: Backed by collateral (e.g., home, car), reducing the lender's risk.
+-- Unsecured Loan: No collateral required, often with higher interest rates due to increased risk.
+-- Fixed-Rate Loan: Interest rate remains constant throughout the loan term.
+-- Variable-Rate Loan: Interest rate fluctuates based on market conditions.
+-- Personal Loan: Used for various personal expenses, usually unsecured.
+-- Mortgage Loan: Specifically for purchasing property, typically secured by the property itself.
+-- Auto Loan: For financing the purchase of a vehicle, often secured by the vehicle.
+-- Student Loan: Specifically for educational expenses, often with favorable repayment terms.

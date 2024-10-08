@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDED FAQ WHOLE FUNCTIONALITIES"
+git commit -m "ADDED WHOLE USER MONTH AND DAILY USAGE AND CONNECTED FAQ OTP PAGES  AND MANAGER LOGIN AND REGISTER"
 git status
 git push -u origin main
 

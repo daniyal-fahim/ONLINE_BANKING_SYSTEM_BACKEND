@@ -2,6 +2,8 @@
 import { pool } from "../../../index.js";
 import { getGId } from "./getUserId.js";
 
+
+
 export const getuserfname = async (req, res) => {
     const user_id = getGId();
     if (!user_id) {
@@ -24,7 +26,6 @@ export const getuserfname = async (req, res) => {
         res.status(500).json({ message: msg });
     }
 };
-
 export const getuserlname = async (req, res) => {
     const user_id = getGId();
     if (!user_id) {

@@ -30,15 +30,14 @@ export const EmailSender = async (req, res) => {
     [Support Email/Phone Number]`;
     const receivers = [
       "daniyal236fahim@gmail.com",
-      "k224282@nu.edu.pk",
       "k224167@nu.edu.pk",
-      "k224663@nu.edu.pk"
+      "k224663@nu.edu.pk",
   ];
   
   const info = await transporter.sendMail({
     from: '"D pay" <daniyal237fahim@gmail.com>', // sender address (hardcoded)
     to: receivers, // list of receivers
-    subject: "DPAY TWO FACTOR ATUTHENTICATION", // Subject line
+    subject: "DPAY TWO FACTOR AUTHENTICATION", // Subject line
     text: `${msg}`, // plain text body
   });
   setOTP(otp);

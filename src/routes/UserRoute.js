@@ -87,7 +87,7 @@ router.get("/showbill",showBills);
 router.get("/getbalance",getbalance);
 
 //OTP ROUTE
-router.post("/sendemail",EmailSender);
+router.get("/sendemail",EmailSender);
 
 router.post("/checkotp",CheckOTP);
 
@@ -125,4 +125,16 @@ router.get('/showallfaqs',showallfaqs);
 router.get('/showunresponse',showunresponsefaqs);
 router.post('/askques',AskQuestion);
 router.post('/giveanswer',GiveAnswer);
+
+//get month bill
+import { getusermonthusage } from '../functions/LOGIN/MonthlyUsage.js';
+import { getUserDailyUsage } from '../functions/LOGIN/MonthlyUsage.js';
+
+router.get('/getmonthexpense',getusermonthusage);
+router.get('/getdailyexpense',getUserDailyUsage);
+//GET LOAN
+
+import { newloanreq } from '../functions/LOAN/newloan.js';
+router.post('/newloan',newloanreq);
+
 export default router;

@@ -1,29 +1,63 @@
-import { getloanid } from "./generateLoanId";
-import { getGId } from "../LOGIN/getUserId";
+import { getloanid } from "./generateLoanId.js";
+import { getGId } from "../LOGIN/getUserId.js";
 import { pool } from "../../../index.js";
+import { getInterestRate } from "./getIntrestRate.js";
 
-// CREATE TABLE Loans (
-//     LOAN_ID INT PRIMARY KEY,
-//     USER_ID INT,
-//     LOAN_TYPE VARCHAR(50),
-//     LOAN_AMOUNT DECIMAL(10, 2),
-//     INTEREST_RATE DECIMAL(5, 2),
-//     TENURE INT,
-//     INSTALLMENT_AMOUNT DECIMAL(10, 2),
-//     START_DATE DATE,
-//     END_DATE DATE,
-//     STATUS VARCHAR(20),
-//     COLLATERAL VARCHAR(100) DEFAULT NULL,
-//     GUARANTOR_NAME VARCHAR(100) DEFAULT NULL,
-//     GUARANTOR_CNIC VARCHAR(50) DEFAULT NULL,,
-//     REPAYMENT_SCHEDULE TEXT DEFAULT NULL,
-//     FOREIGN KEY (USER_ID) REFERENCES Users(USER_ID)
-//   );
-  
-export const newloanreq = (req,res) => {
-    var Loan_id=getloanid();
-    const {LOAN_TYPE,LOAN_AMOUNT,TENURE,INSTALLMENT_AMOUNT,COLLATERAL,GUARANTOR_NAME, GUARANTOR_CNIC}=req.body;
-    var user_id=getGId();
+export const newloanreq = async (req, res) => {
+    var Loan_id = await getloanid();
+    const { LOAN_TYPE, LOAN_AMOUNT, TENURE, COLLATERAL, GUARANTOR_NAME, GUARANTOR_CNIC } = req.body;
+    var user_id = getGId();
+    let interestRate = getInterestRate(TENURE, LOAN_AMOUNT, COLLATERAL);
 
+    // Calculate total loan amount with interest
+    const totalLoanAmount = LOAN_AMOUNT + (LOAN_AMOUNT * (interestRate / 100));
 
-} 
+    // Calculate monthly installment amount
+    const installmentAmount = totalLoanAmount / (TENURE * 12);
+
+    // Set the start date to the current date
+    const startDate = new Date();
+
+    // Calculate end date by adding tenure (in years) to start date
+    const endDate = new Date();
+    endDate.setFullYear(startDate.getFullYear() + TENURE);
+
+    // Create repayment schedule (optional - just an example format)
+    const repaymentSchedule = JSON.stringify({
+        monthlyInstallment: installmentAmount,
+        startDate: startDate.toISOString().split('T')[0], // Format to YYYY-MM-DD
+        endDate: endDate.toISOString().split('T')[0],
+        totalPayments: TENURE * 12,
+        totalLoanAmount: totalLoanAmount
+    });
+
+    try {
+        // Insert loan request data into the Loans table
+        await pool.query(
+            `INSERT INTO loans 
+            (LOAN_ID, USER_ID, LOAN_TYPE, LOAN_AMOUNT, INTEREST_RATE, TENURE, INSTALLMENT_AMOUNT, START_DATE, END_DATE, STATUS, COLLATERAL, GUARANTOR_NAME, GUARANTOR_CNIC, REPAYMENT_SCHEDULE)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+            [
+                Loan_id,
+                user_id,
+                LOAN_TYPE,
+                totalLoanAmount,
+                interestRate,
+                TENURE,
+                installmentAmount,
+                startDate,
+                endDate,
+                'PENDING', // Loan status
+                COLLATERAL || null,
+                GUARANTOR_NAME || null,
+                GUARANTOR_CNIC || null,
+                repaymentSchedule
+            ]
+        );
+
+        res.status(200).send("Loan request submitted successfully!");
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error processing loan request.");
+    }
+};

@@ -11,7 +11,7 @@ const getIdNum = () => {
   export const getloanid = async () => {
     let Id = getIdNum();
     const checkAcc = await pool.query(
-      "SELECT * FROM LOAN WHERE loan_id = $1",
+      "SELECT * FROM LOANS WHERE loan_id = $1",
       [Id]
     );
   
