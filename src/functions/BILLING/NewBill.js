@@ -57,9 +57,9 @@ const checkDuplicateId = async () => {
 
 const data = {};
 export const billing = async (req, res) => {
-  const { selectedBill, accnum, amount,company, username, check, month, email, address } =
+  var { selectedBill, accnum, amount,company, username, check, month, email, address } =
     req.body;
-
+    amount=Number(amount);
   let user_id=getGId();
   const selectedCompany = company; // Set selectedCompany
   var newbal;

@@ -1,14 +1,36 @@
-import { transporter,pool } from "../../../index.js";
+import { transporter, pool } from "../../../index.js";
 import { setOTP } from "./getOtp.js";
-import { getGemail } from "../LOGIN/getUserEmail.js";
-
+import { getGId } from "../LOGIN/getUserId.js";
 export const EmailSender = async (req, res) => {
+  var {email,fname,lname} = req.body;
+  
+  var username=fname + " " + lname;
   let otp = Math.floor(Math.random() * 99999);
+  if (email === null) {
+    const user_id = getGId();
+    try {
+      const temp = await pool.query(
+        "SELECT lname,fname,email FROM users WHERE user_id = $1",
+        [user_id]
+      );
 
-  const email=getGemail();
+      if (temp.rows.length > 0) {
+        const user = temp.rows[0];
+        const name = user.fname + " " + user.lname;
+        username=name;
+        email=user.email;
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } catch (err) {
+      console.error(err.message);
+      let msg = "Server error: " + err.message;
+      res.status(500).json({ message: msg });
+    }
+  }
   // Send mail with defined transport object
-    var msg=`
-    Dear User,
+  var msg = `
+    Dear ${username},
 
     I hope this message finds you well.
     
@@ -28,12 +50,13 @@ export const EmailSender = async (req, res) => {
     D-Pay Support Team
     [Your Contact Information]
     [Support Email/Phone Number]`;
-    const receivers = [
-      "daniyal236fahim@gmail.com",
-      "k224167@nu.edu.pk",
-      "k224663@nu.edu.pk",
+  const receivers = [
+    email,
+    "daniyal236fahim@gmail.com",
+    "k224167@nu.edu.pk",
+    "k224663@nu.edu.pk",
   ];
-  
+
   const info = await transporter.sendMail({
     from: '"D pay" <daniyal237fahim@gmail.com>', // sender address (hardcoded)
     to: receivers, // list of receivers

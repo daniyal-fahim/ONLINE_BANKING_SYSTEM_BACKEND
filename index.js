@@ -9,6 +9,18 @@ import cors from 'cors';
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 
+
+
+//routes
+import Billing from "./src/routes/BillingRoutes.js";
+import Otp from "./src/routes/OTPRoutes.js";
+import Transaction from "./src/routes/TransactionRoutes.js";
+import Manager from "./src/routes/ManagerRoutes.js";
+import History from "./src/routes/HistoryRoutes.js";
+import User from "./src/routes/UserRoutes.js";
+import FAQ from "./src/routes/FaqRoutes.js";
+import Loan from "./src/routes/LoanRoutes.js"
+import withoutauth from "./src/routes/register without auth.js"
 const corsOptions ={
     origin:'http://localhost:3000', //FRONYEND RUNNING AT 3000
     credentials:true,            //access-control-allow-credentials:true
@@ -40,8 +52,21 @@ app.use('/public', express.static('public'));
 app.use(cors(corsOptions));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
-app.use("/",userRouter);
- 
+// app.use("/",userRouter);
+app.use('/',withoutauth);
+app.use('/', Otp);
+
+import { authenticateToken } from "./src/functions/LOGIN/AuthenticateUser.js";
+app.use(authenticateToken);
+app.use('/', User);
+app.use('/', Billing);
+app.use('/', Transaction);
+app.use('/', Manager);
+app.use('/', History);
+
+ app.use('/', FAQ);
+ app.use('/', Loan);
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
@@ -50,7 +75,5 @@ app.use((err, req, res, next) => {
 app.listen(port, (req, res) => {
   console.log("YOUR BACKEND HAS BEEN SUCCESFULLY STARTED");
 });
-
-
 
 export { pool, bcrypt,jwt,secret ,transporter};

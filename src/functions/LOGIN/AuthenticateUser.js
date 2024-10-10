@@ -6,14 +6,15 @@ export const authenticateToken = (req, res, next)=> {
     const token = req.cookies.token;
   
     if (!token) {
-      return res.redirect('/login'); 
+      console.log("DONOT VERIFY")
+      // return res.redirect('/login'); 
     }
   
     jwt.verify(token, secret, (err, user) => { // Use the same secret here
       if (err) {
         res.clearCookie("token"); // Clear the invalid token
         console.log("DONOT VERIFY")
-            // return res.redirect('/login'); // Invalid token
+            return res.redirect('/login'); // Invalid token
       }
       console.log('Token Verified:', user);
   
