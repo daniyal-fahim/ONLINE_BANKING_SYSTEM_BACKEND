@@ -21,6 +21,7 @@ import User from "./src/routes/UserRoutes.js";
 import FAQ from "./src/routes/FaqRoutes.js";
 import Loan from "./src/routes/LoanRoutes.js"
 import withoutauth from "./src/routes/register without auth.js"
+import card from "./src/routes/CardRoutes.js"
 const corsOptions ={
     origin:'http://localhost:3000', //FRONYEND RUNNING AT 3000
     credentials:true,            //access-control-allow-credentials:true
@@ -63,9 +64,9 @@ app.use('/', Billing);
 app.use('/', Transaction);
 app.use('/', Manager);
 app.use('/', History);
-
- app.use('/', FAQ);
- app.use('/', Loan);
+app.use('/', FAQ);
+app.use('/', Loan);
+app.use('/',card);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

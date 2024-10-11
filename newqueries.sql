@@ -85,7 +85,7 @@ CREATE TABLE history (
 );
 
 
---NEW COMMANDS TO WORK ON
+--NEW COMMANDS TO WORK ON 2nd
 
 ALTER TABLE balance ALTER COLUMN balance TYPE NUMERIC(15, 2);
 
@@ -153,3 +153,21 @@ ALTER COLUMN loan_amount TYPE DECIMAL(15,2);
 -- Mortgage Loan: Specifically for purchasing property, typically secured by the property itself.
 -- Auto Loan: For financing the purchase of a vehicle, often secured by the vehicle.
 -- Student Loan: Specifically for educational expenses, often with favorable repayment terms.
+
+
+--3rd  CHANGES
+CREATE TABLE CARD(
+  CARD_ID INT PRIMARY KEY UNIQUE,
+  USER_ID VARCHAR(12) NOT NULL UNIQUE,
+  CARD_NUM VARCHAR(20) NOT NULL,
+  PHONE VARCHAR(30) NOT NULL,
+  PIN VARCHAR(100) NOT NULL,
+  CARD_NAME VARCHAR(30) NOT NULL,
+  CARD_TYPE VARCHAR(30) NOT NULL,
+  FOREIGN KEY (USER_ID) REFERENCES Users(USER_ID)
+
+  
+);
+ALTER TABLE CARD
+ALTER COLUMN CARD_ID TYPE VARCHAR(15),
+ADD CONSTRAINT card_id_unique UNIQUE (CARD_ID);
