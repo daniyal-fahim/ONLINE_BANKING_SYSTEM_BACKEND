@@ -1,11 +1,12 @@
 import { getloanid } from "./generateLoanId.js";
 import { getGId } from "../LOGIN/getUserId.js";
 import { pool } from "../../../index.js";
-import { getInterestRate } from "./getIntrestRate.js";
+import { getInterestRate } from "./getIntrestRate.js"; 
 
 export const newloanreq = async (req, res) => {
     var Loan_id = await getloanid();
-    const { LOAN_TYPE, LOAN_AMOUNT, TENURE, COLLATERAL, GUARANTOR_NAME, GUARANTOR_CNIC } = req.body;
+    const { income,LOAN_TYPE, LOAN_AMOUNT, TENURE, COLLATERAL, GUARANTOR_NAME, GUARANTOR_CNIC } = req.body;
+    //add logic for income
     var user_id = getGId();
     let interestRate = getInterestRate(TENURE, LOAN_AMOUNT, COLLATERAL);
 

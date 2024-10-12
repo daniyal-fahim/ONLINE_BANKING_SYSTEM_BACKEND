@@ -11,7 +11,8 @@ export const EmailSender = async (req, res) => {
 
     if (!email) {
       const user_id = getGId();
-      const temp = await pool.query(
+      if(user_id[0]=='U')
+        {const temp = await pool.query(
         "SELECT lname, fname, email FROM users WHERE user_id = $1",
         [user_id]
       );
@@ -23,6 +24,21 @@ export const EmailSender = async (req, res) => {
         console.log(email +' '+ username);
       } else {
         return res.status(404).json({ message: "User not found" });
+      }}
+      else{
+        const temp = await pool.query(
+          "SELECT lname, fname, email FROM administration WHERE admin_id = $1",
+          [user_id]
+        );
+      
+        if (temp.rows.length > 0) {
+          const user = temp.rows[0];
+          username = `${user.fname} ${user.lname}`;
+          email = user.email;
+          console.log(email +' '+ username);
+        } else {
+          return res.status(404).json({ message: "Admin not found" });
+        }
       }
     }
 

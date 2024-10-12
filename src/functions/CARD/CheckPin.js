@@ -24,7 +24,6 @@ export const checkPin = async (req, res) => {
         if (result.rows.length > 0) {
             const hashedPin = result.rows[0].pin;
             console.log(hashedPin);
-            // Check if the provided PIN matches the hashed PIN
             const isMatch = await bcrypt.compare(pin, hashedPin);
 
             if (isMatch) {

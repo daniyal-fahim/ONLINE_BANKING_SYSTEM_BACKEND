@@ -29,6 +29,8 @@ const checkDuplicateId = async () => {
 }
 
 export const registerManager = async (req, res) => {
+  console.log("Incoming request body:", req.body); // Log incoming request
+
   const {
     dob,
     fname,

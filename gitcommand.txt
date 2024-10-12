@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDED ALL CARD MANAGE,MENT API AND DATABASE"
+git commit -m "MANAGER LOGIN AND SIGNUP"
 git status
 git push -u origin main
 
