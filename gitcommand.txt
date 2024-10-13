@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "MANAGER LOGIN AND SIGNUP"
+git commit -m "UPDATE BACKEND ALSO CONNECTED THE APPROVAL BACKEND WITH THE FRONTEND"
 git status
 git push -u origin main
 
