@@ -16,7 +16,7 @@ export const authenticateToken = (req, res, next)=> {
       if (err) {
         res.clearCookie("token"); // Clear the invalid token
         console.log("DONOT VERIFY")
-            return res.redirect('/login'); // Invalid token
+        return res.status(500).json({ msg: "please login first" });
       }
       console.log('Token Verified:', user);
   
