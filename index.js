@@ -84,5 +84,5 @@ app.listen(port, (req, res) => {
   console.log("YOUR BACKEND HAS BEEN SUCCESFULLY STARTED");
 });
 
-export { pool, bcrypt,jwt,secret ,transporter};
-
+//export { pool, bcrypt,jwt,secret ,transporter};
+export default app;
