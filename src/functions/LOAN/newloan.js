@@ -1,6 +1,6 @@
 import { getloanid } from "./generateLoanId.js";
 import { getGId } from "../LOGIN/getUserId.js";
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 import { getInterestRate } from "./getIntrestRate.js"; 
 
 export const newloanreq = async (req, res) => {

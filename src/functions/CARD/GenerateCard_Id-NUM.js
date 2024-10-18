@@ -1,5 +1,4 @@
-import { pool } from "../../../index.js";
-
+import pool from "../../config/db.js";
 const getIdNum = () => {
     let Id = "CD-";
     for (let i = 0; i < 4; i++) {

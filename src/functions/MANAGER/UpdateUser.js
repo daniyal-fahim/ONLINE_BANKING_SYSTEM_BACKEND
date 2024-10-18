@@ -1,4 +1,4 @@
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 
 export const updateUser = async (req, res) => {
   const {

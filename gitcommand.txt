@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "DEPLOYING ON VERCEL 4"
+git commit -m "DEPLOYING ON VERCEL 7 creating config folder"
 git status
 git push -u origin main
 

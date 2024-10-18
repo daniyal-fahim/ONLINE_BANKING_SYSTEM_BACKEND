@@ -1,4 +1,4 @@
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 
 // Function to generate a unique 4-digit ID with 'FAQ-' prefix
 const generateUniqueFaqId = () => {

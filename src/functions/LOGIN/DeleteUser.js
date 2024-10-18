@@ -1,5 +1,5 @@
-import { pool, bcrypt} from "../../../index.js";
-
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
 
 export const delete1 = async (req, res) => {
     const { email, password } = req.body;

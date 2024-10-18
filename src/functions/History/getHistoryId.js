@@ -1,4 +1,4 @@
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 
 //generate unique history_id
 const getIdNum2 = () => {

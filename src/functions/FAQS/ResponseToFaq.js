@@ -1,4 +1,4 @@
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 
 export const showunresponsefaqs = async (req, res) => {
   try {

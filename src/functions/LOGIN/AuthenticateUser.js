@@ -1,5 +1,7 @@
-import { pool, bcrypt, jwt, secret } from "../../../index.js";
+
 import { setGId } from "./getUserId.js";
+import { jwt } from "../../config/auth.js";
+import { secret } from "../../config/auth.js";
 
 export const authenticateToken = (req, res, next)=> {
   

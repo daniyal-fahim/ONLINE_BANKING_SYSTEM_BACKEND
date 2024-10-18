@@ -1,5 +1,6 @@
-import { pool, bcrypt} from "../../../index.js";
 
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
 export const find = async (req, res) => {
     const { email, password } = req.body;
     const temp = await pool.query("SELECT * FROM users WHERE email = $1", [

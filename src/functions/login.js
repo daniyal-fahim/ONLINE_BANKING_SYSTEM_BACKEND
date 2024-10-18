@@ -1,5 +1,7 @@
-import { pool, bcrypt, jwt ,secret} from "../../index.js";
-
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
+import { jwt } from "../../config/auth.js";
+import { secret } from "../../config/auth.js";
 var Gemail = "DANI@GM";
 // var secret='secret';
 // export const login = async (req, res) => {

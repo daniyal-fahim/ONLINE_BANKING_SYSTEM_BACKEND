@@ -1,4 +1,5 @@
-import { pool, bcrypt} from "../../../index.js"
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
 import { getGId } from "../LOGIN/getUserId.js"
 import { getUniqueCardNum ,getCardid} from "./GenerateCard_Id-NUM.js";
 

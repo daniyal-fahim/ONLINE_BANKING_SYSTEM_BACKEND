@@ -1,4 +1,5 @@
-import { pool, bcrypt } from "../../../index.js";
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
 
 //generate unique admin_id
 const getIdNum = () => {

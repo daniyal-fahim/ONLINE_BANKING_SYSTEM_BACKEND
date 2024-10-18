@@ -1,4 +1,5 @@
-import { transporter, pool } from "../../../index.js";
+import transporter from "../../config/mailer.js";
+import pool from "../../config/db.js";
 import { setOTP } from "./getOtp.js";
 import { getGId } from "../LOGIN/getUserId.js";
 

@@ -1,5 +1,5 @@
 
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 import { getGId } from "./getUserId.js";
 
 

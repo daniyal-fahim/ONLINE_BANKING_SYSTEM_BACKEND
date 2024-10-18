@@ -1,4 +1,4 @@
-import { pool } from "../../../index.js";
+import pool from "../../config/db.js";
 import { getGId } from "./getUserId.js";
 export const getusermonthusage = async (req, res) => {
   // Get the current date

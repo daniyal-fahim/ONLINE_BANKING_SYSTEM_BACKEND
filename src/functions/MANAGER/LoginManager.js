@@ -1,5 +1,7 @@
-import { pool, bcrypt, jwt, secret } from "../../../index.js";
-
+import pool from "../../config/db.js";
+import { bcrypt } from "../../config/auth.js";
+import { jwt } from "../../config/auth.js";
+import { secret } from "../../config/auth.js";
 import { setGId } from "../LOGIN/getUserId.js";
 
 export const loginManager = async (req, res) => {
