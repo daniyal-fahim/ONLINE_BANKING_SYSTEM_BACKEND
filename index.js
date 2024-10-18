@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 
+
 dotenv.config();
 //routes
 import Billing from "./src/routes/BillingRoutes.js";
@@ -84,3 +85,4 @@ app.listen(port, (req, res) => {
 });
 
 export { pool, bcrypt,jwt,secret ,transporter};
+
