@@ -18,7 +18,9 @@ router.get("/getunapprove",getAllUnauthorized);
 import { updateApproval } from '../functions/MANAGER/UpdateApproval.js';
 import { FindUser } from '../functions/MANAGER/FindParticularUser.js';
 import { getAllUser } from '../functions/MANAGER/GetAllUser.js';
+import { updateUser } from '../functions/MANAGER/UpdateUser.js';
 
+router.post("/updateuser",updateUser);
 router.get("/getalluser",getAllUser);//return all the admn and the users in the database
 router.post("/finduser",FindUser); //recieves an id whether user or admin and return the user full detail
 
