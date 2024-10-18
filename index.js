@@ -8,9 +8,9 @@ import userRouter from "./src/routes/UserRoute.js"
 import cors from 'cors';
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv'
 
-
-
+dotenv.config();
 //routes
 import Billing from "./src/routes/BillingRoutes.js";
 import Otp from "./src/routes/OTPRoutes.js";
@@ -36,18 +36,24 @@ const port = 5000; //BACKEND RUNNING AT 5000
 const transporter = nodemailer.createTransport({
   service: "gmail", // Use Gmail service
   auth: {
-    user: "daniyal237fahim@gmail.com", // Your Gmail email (hardcoded)
-    pass: "amwx bdap dynn lzzi", // Your Gmail password or App Password (hardcoded)
+    user:process.env.EMAIL, // Your Gmail email (hardcoded)
+    pass: process.env.EMAIL_PASSWORD, // Your Gmail password or App Password (hardcoded)
   },
 });
- //Configuring the Postgres server as pool
+
+
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "D_PAY",//"BANKING WORLD",
-  password: "FAST",
-  port: 5432,
+  connectionString: process.env.POSTGRES_URL,
 });
+
+ //Configuring the Postgres server as pool
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "D_PAY",//"BANKING WORLD",
+//   password: "FAST",
+//   port: 5432,
+// });
 app.use(cookieParser());
 app.use('/public', express.static('public'));
 app.use(cors(corsOptions));
