@@ -1,11 +1,6 @@
 import express from "express";
 import bodyparser from "body-parser";
-import pkg from "pg";
-import nodemailer from "nodemailer";
-const { Pool } = pkg;
-import bcrypt from "bcryptjs";
 import cors from "cors";
-import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
@@ -32,18 +27,7 @@ const corsOptions = {
     optionSuccessStatus: 200
 };
 
-const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-});
 
-// Configuring node mailer
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-});
 
 app.use(cookieParser());
 app.use('/public', express.static('public'));
@@ -73,10 +57,10 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-// const port = 5000; 
-// app.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-//   });
+const port = 5000; 
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
 
 // Export the app for Vercel
 export default app;
