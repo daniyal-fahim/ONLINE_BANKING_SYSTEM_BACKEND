@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "DEPLOYING WEBSITE"
+git commit -m "DEPLOYING ON VERCEL"
 git status
 git push -u origin main
 
