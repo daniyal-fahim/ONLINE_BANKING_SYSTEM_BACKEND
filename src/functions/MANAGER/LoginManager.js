@@ -47,6 +47,7 @@ export const loginManager = async (req, res) => {
         res.status(200).json({
           ok: true,
           message: "Login successful!",
+          token:token
         });
       } else {
         // Passwords do not match
