@@ -22,7 +22,8 @@ import card from "./src/routes/CardRoutes.js";
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // FRONTEND RUNNING AT 3000
+    // origin: 'http://localhost:3000', // FRONTEND RUNNING AT 3000
+    origin: 'https://ddd-banking-app-88r4.vercel.app',
     credentials: true,              // access-control-allow-credentials:true
     optionSuccessStatus: 200
 };
