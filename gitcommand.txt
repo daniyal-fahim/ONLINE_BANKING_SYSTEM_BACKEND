@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " all set and update deployment successfull"
+git commit -m " Giving Access To local Host And URL"
 git status
 git push -u origin main
 

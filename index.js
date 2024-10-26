@@ -22,12 +22,13 @@ import card from "./src/routes/CardRoutes.js";
 const app = express();
 
 const corsOptions = {
-    // origin: 'http://localhost:3000', // FRONTEND RUNNING AT 3000
-    origin: 'https://ddd-banking-app-88r4.vercel.app',
-    credentials: true,              // access-control-allow-credentials:true
+    origin: [
+        'http://localhost:3000',  // For local development
+        'https://ddd-banking-app-88r4.vercel.app'  
+    ],
+    credentials: true,  
     optionSuccessStatus: 200
 };
-
 
 
 app.use(cookieParser());
@@ -58,10 +59,11 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
 });
-// const port = 5000; 
-// app.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-//   });
+
+const port = 5000; 
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
 
 // Export the app for Vercel
 export default app;
