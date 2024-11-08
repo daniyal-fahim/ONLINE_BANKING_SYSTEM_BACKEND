@@ -3,7 +3,7 @@ import pool from "../../config/db.js";
 export const showallfaqs = async (req, res) => {
   try {
     // Query to fetch all FAQs where addfaq is true (i.e., answered FAQs)
-    const data = await pool.query('SELECT * FROM FAQS WHERE addfaq = TRUE');
+    const data = await pool.query('SELECT * FROM FAQS ');
 
     // Check if there are any FAQs available
     if (data.rows.length > 0) {
