@@ -11,9 +11,10 @@ import { getuseraccountnumber, getusercnic, getuseremail, getuserfname, getuseru
 import { getuserfullname, getusernationality, getuserlname, getuserinfo, getuserapproval, getuserdob } from '../functions/LOGIN/userallgetter.js';
 import { getusermonthusage } from '../functions/LOGIN/MonthlyUsage.js';
 import { getUserDailyUsage } from '../functions/LOGIN/MonthlyUsage.js';
-
+import { getUserCount } from '../functions/MANAGER/UserCount.js';
 import { generateid } from '../functions/generatenewid.js';
 import { getbankdailyusage } from '../functions/LOGIN/BankMonthlyUsage.js';
+import { getbankcurrentmonthusage } from '../functions/LOGIN/bankthismonthusage.js';
 // Route to generate a new ID (No authentication needed)
 router.get("/generateid", generateid);
 
@@ -45,4 +46,6 @@ router.get('/getmonthexpense', getusermonthusage);
 router.get('/getdailyexpense', getUserDailyUsage);
 router.get('/getbankdailyexpense', getbankdailyusage);
 
+router.get('/getusercount',getUserCount);
+router.get('/getbankcurrentmonthusage',getbankcurrentmonthusage)
 export default router;
