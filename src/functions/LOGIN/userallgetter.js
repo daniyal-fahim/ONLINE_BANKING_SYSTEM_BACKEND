@@ -48,33 +48,46 @@ export const getuserlname = async (req, res) => {
     }
 };
 export const getuserfullname = async (req, res) => {
-    const user_id = getGId();
+    const user_id = getGId(); // Get user ID (presumed from some session or JWT)
+  
     if (!user_id) {
-        return res.status(400).json({ message: "Invalid user ID" });
+      return res.status(400).json({ message: "Invalid user ID" });
     }
-    
+  
     try {
-        var temp;
-        if (user_id.startsWith('U')) {
-        temp = await pool.query('SELECT lname,fname,email FROM users WHERE user_id = $1', [user_id]);
-        }
-        else if( !user_id.startsWith('AD') ){
-            temp = await pool.query('SELECT lname,fname,email FROM administration WHERE admin_id = $1', [user_id]);
-        }
-        if (temp.rows.length > 0) {
-            const user = temp.rows[0];
-            const name=user.fname+' '+user.lname;
-            res.json({fullname:name,
-            email:user.email});
-        } else {
-            res.status(404).json({ message: "User not found" });
-        }
+      let temp;
+  
+      // Determine the correct query based on user ID prefix
+      if (user_id.startsWith('U')) {
+        // Query for regular users
+        temp = await pool.query('SELECT lname, fname, email FROM users WHERE user_id = $1', [user_id]);
+      } else if (user_id.startsWith('AD')) {
+        // Query for admins
+        temp = await pool.query('SELECT lname, fname, email FROM administration WHERE admin_id = $1', [user_id]);
+      } else {
+        // Handle unknown user_id format
+        return res.status(400).json({ message: "Invalid user ID format" });
+      }
+  
+      // If the query returns a valid result
+      if (temp.rows.length > 0) {
+        const user = temp.rows[0];
+        const fullName = `${user.fname} ${user.lname}`;
+        res.json({
+          fullname: fullName,
+          email: user.email,
+        });
+      } else {
+        // If no results found
+        res.status(404).json({ message: "User not found" });
+      }
+  
     } catch (err) {
-        console.error(err.message);
-        let msg = "Server error: " + err.message;
-        res.status(500).json({ message: msg });
+      console.error("Error:", err.message);
+      res.status(500).json({ message: `Server error: ${err.message}` });
     }
-};
+  };
+  
 export const getuseremail = async (req, res) => {
     const user_id = getGId();
     if (!user_id) {
