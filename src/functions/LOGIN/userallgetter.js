@@ -54,11 +54,12 @@ export const getuserfullname = async (req, res) => {
     }
     
     try {
+        var temp;
         if (user_id.startsWith('U')) {
-        const temp = await pool.query('SELECT lname,fname,email FROM users WHERE user_id = $1', [user_id]);
+        temp = await pool.query('SELECT lname,fname,email FROM users WHERE user_id = $1', [user_id]);
         }
         else if( !user_id.startsWith('AD') ){
-            const temp = await pool.query('SELECT lname,fname,email FROM administration WHERE admin_id = $1', [user_id]);
+            temp = await pool.query('SELECT lname,fname,email FROM administration WHERE admin_id = $1', [user_id]);
         }
         if (temp.rows.length > 0) {
             const user = temp.rows[0];
