@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " Giving Access To local Host And URL"
+git commit -m " ADDING THE FUNCTIONS FOR THE MANAGER DASHBOARD"
 git status
 git push -u origin main
 
