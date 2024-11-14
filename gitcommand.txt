@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " CORRECTED ADDING THE email FUNCTIONS"
+git commit -m " CORRECTING THE EMAILS WORK FOR THE LOAN APP AND UPDATED THE OTP EMAIL CONTENT"
 git status
 git push -u origin main
 

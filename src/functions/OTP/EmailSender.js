@@ -44,15 +44,22 @@ export const EmailSender = async (req, res) => {
     }
 
     const msg = `
-      Dear ${username},
-      ...
-      Your OTP: ${otp}
-      ...
-      Best regards,
-      D-Pay Support Team
-      Daniyal : k224282@nu.edu.pk
-      Dawood  : k224663@nu.edu.pk
-      Daiyan  : k224167@nu.edu.pk
+Dear ${username},
+
+For enhanced security of your [Banking App Name] account, we have implemented a Two-Factor Authentication (2FA) process to ensure only you can access your account. This additional layer of security protects your personal information from unauthorized access.
+
+Your One-Time Verification Code
+Your secure access code is: ${otp}
+
+Please enter this code on the authentication page within the next 10 minutes to complete your login. For security reasons, this code will expire after 10 minutes, and a new one will be required if this time lapses.
+
+What to Do if You Did Not Request This Code
+If you did not initiate this login attempt, please disregard this email and notify us immediately by contacting our customer support team at [support email] or [support phone number].
+
+At D PAY, we are committed to keeping your personal information safe and secure. Thank you for choosing us as your trusted banking partner.
+
+Best regards,
+The D Pay Security Team
     `;
 
     const receivers = [

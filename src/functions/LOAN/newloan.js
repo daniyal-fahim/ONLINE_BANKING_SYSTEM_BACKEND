@@ -2,7 +2,7 @@ import { getloanid } from "./generateLoanId.js";
 import { getGId } from "../LOGIN/getUserId.js";
 import pool from "../../config/db.js";
 import { getInterestRate } from "./getIntrestRate.js"; 
-
+import { LoanEmail } from "./loanemail.js";
 export const newloanreq = async (req, res) => {
     var Loan_id = await getloanid();
     const { income,LOAN_TYPE, LOAN_AMOUNT, TENURE, COLLATERAL, GUARANTOR_NAME, GUARANTOR_CNIC } = req.body;
@@ -55,7 +55,7 @@ export const newloanreq = async (req, res) => {
                 repaymentSchedule
             ]
         );
-
+        LoanEmail(LOAN_TYPE, LOAN_AMOUNT, TENURE, installmentAmount);
         res.status(200).send("Loan request submitted successfully!");
     } catch (err) {
         console.log(err.message);
