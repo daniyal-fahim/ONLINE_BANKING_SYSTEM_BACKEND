@@ -1,9 +1,9 @@
 import transporter from "../../config/mailer.js";
 import pool from "../../config/db.js";
-import { setOTP } from "./getOtp.js";
+import { setOTP } from "../OTP/getOtp.js";
 import { getGId } from "../LOGIN/getUserId.js";
 
-export const EmailSender = async (req, res) => {
+export const TransactionEmail = async (rnum, rname, amount) => {
   try {
     const { email1, fname, lname } = req.body;
     var email=email1;
@@ -45,14 +45,22 @@ export const EmailSender = async (req, res) => {
 
     const msg = `
       Dear ${username},
-      ...
-      Your OTP: ${otp}
-      ...
-      Best regards,
-      D-Pay Support Team
-      Daniyal : k224282@nu.edu.pk
-      Dawood  : k224663@nu.edu.pk
-      Daiyan  : k224167@nu.edu.pk
+
+We are pleased to inform you that a funds transfer request has been successfully initiated through our app. Below are the details of the transaction for your reference:
+
+Receiver Details:
+
+Account Number: ${rnum}
+Name: ${rname}
+Amount: ${amount}
+Please verify the transaction details and contact our support team if you have any questions or require further assistance.
+
+Thank you for choosing our services!
+
+
+
+Best regards,
+D Pay Support Team
     `;
 
     const receivers = [
@@ -65,7 +73,7 @@ export const EmailSender = async (req, res) => {
     const info = await transporter.sendMail({
       from: '"D pay" <daniyal237fahim@gmail.com>',
       to: receivers,
-      subject: "DPAY TWO FACTOR AUTHENTICATION",
+      subject: "Funds Transfer Confirmation",
       text: msg,
     });
 

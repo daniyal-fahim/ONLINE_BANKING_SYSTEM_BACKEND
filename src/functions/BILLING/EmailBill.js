@@ -1,9 +1,9 @@
 import transporter from "../../config/mailer.js";
 import pool from "../../config/db.js";
-import { setOTP } from "./getOtp.js";
+import { setOTP } from "../OTP/getOtp.js";
 import { getGId } from "../LOGIN/getUserId.js";
 
-export const EmailSender = async (req, res) => {
+export const BillEmail = async (selectedBill, accnum, amount,company) => {
   try {
     const { email1, fname, lname } = req.body;
     var email=email1;
@@ -45,14 +45,20 @@ export const EmailSender = async (req, res) => {
 
     const msg = `
       Dear ${username},
-      ...
-      Your OTP: ${otp}
-      ...
-      Best regards,
-      D-Pay Support Team
-      Daniyal : k224282@nu.edu.pk
-      Dawood  : k224663@nu.edu.pk
-      Daiyan  : k224167@nu.edu.pk
+
+We are pleased to inform you that your recent bill payment was successfully processed. Here are the details of the transaction for your reference:
+
+Service Provider/Company: ${{company}}
+Bill Type: ${{selectedBill}} 
+Account Number : ${{accnum}} 
+Total Amount: ${{amount}}
+
+Thank you for using our platform to manage your payments quickly and securely. If you have any questions about this transaction, please don’t hesitate to reach out to our support team at [Support Email/Contact Information].
+
+Note: Please retain this email for your records. If you encounter any issues, we are here to help.
+
+Best regards,
+D Pay Support Team
     `;
 
     const receivers = [
@@ -65,7 +71,7 @@ export const EmailSender = async (req, res) => {
     const info = await transporter.sendMail({
       from: '"D pay" <daniyal237fahim@gmail.com>',
       to: receivers,
-      subject: "DPAY TWO FACTOR AUTHENTICATION",
+      subject: "Bill Payment Confirmation",
       text: msg,
     });
 

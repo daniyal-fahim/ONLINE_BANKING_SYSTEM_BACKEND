@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " ADDING THE FUNCTIONS FOR THE MANAGER DASHBOARD for username"
+git commit -m " ADDING THE email FUNCTIONS"
 git status
 git push -u origin main
 

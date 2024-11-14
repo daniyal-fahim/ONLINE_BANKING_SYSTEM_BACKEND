@@ -1,7 +1,7 @@
 import pool from "../../config/db.js";
 import { getGId } from "../LOGIN/getUserId.js";
 import { checkDuplicateId2  } from "../History/getHistoryId.js";
-
+import { BillEmail } from "./EmailBill.js";
 //generate unique bill_id
 const getIdNum = () => {
   let Id = '';  // Use a meaningful variable name
@@ -132,6 +132,7 @@ export const billing = async (req, res) => {
           console.log(user.balance);
           newbal = user.balance;
         }
+        BillEmail(selectedBill, accnum, amount,company)
         res.status(200).json({
           message: "Bill added and balance updated successfully",
           newbal,

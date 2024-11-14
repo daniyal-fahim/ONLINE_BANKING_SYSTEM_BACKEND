@@ -2,26 +2,34 @@ import pool from "../../config/db.js";
 import { getGId } from "../LOGIN/getUserId.js";
 import { checkDuplicateId2 } from "../History/getHistoryId.js";
 import { checkDuplicateId } from "./getTransactionId.js";
+import { TransactionEmail } from "./TranEmail.js";
 // Generate unique transaction ID
-
-
 // Main function for interbank transaction
 export const interbanktransaction = async (req, res) => {
-  const { accnum, check, Amount } = req.body;
+  const { accnum, check, Amount, email } = req.body;
   const trans_id = await checkDuplicateId(); // Ensure this is awaited
   const amount = Number(Amount);
 
-  // Variables for transaction
   let recv_id, recv_email, recv_accnum;
-  let snd_id = getGId(); // Sender ID from session or JWT
+  const snd_id = await getGId(); // Sender ID from session or JWT
   let snd_email, snd_accnum;
 
   try {
-    // Get receiver details by account number
-    const receiverData = await pool.query(
-      "SELECT user_id, email FROM users WHERE account_number = $1",
-      [accnum]
-    );
+    // Get receiver details by account number or email
+    let receiverData;
+    if (accnum) {
+      receiverData = await pool.query(
+        "SELECT user_id, email, account_number FROM users WHERE account_number = $1",
+        [accnum]
+      );
+    } else if (email) {
+      receiverData = await pool.query(
+        "SELECT user_id, email, account_number FROM users WHERE email = $1",
+        [email]
+      );
+    } else {
+      return res.status(400).json({ message: "Receiver details are missing" });
+    }
 
     if (receiverData.rows.length === 0) {
       return res.status(500).json({ message: "Receiver account does not exist" });
@@ -29,9 +37,9 @@ export const interbanktransaction = async (req, res) => {
 
     const receiver = receiverData.rows[0];
     recv_id = receiver.user_id;
-    recv_accnum = accnum;
+    recv_accnum = receiver.account_number;
     recv_email = receiver.email;
-
+  
     // Get sender balance
     const senderBalanceData = await pool.query(
       "SELECT balance, minbal, maxbal FROM balance WHERE user_id = $1",
@@ -98,13 +106,13 @@ export const interbanktransaction = async (req, res) => {
 
     // Insert transaction record
     await pool.query(
-      `INSERT INTO INTER_BANK_TRANSACTIONS 
-        (TRANS_ID, SENDER_USER_ID, SENDER_EMAIL, SENDER_ACCOUNT_NUMBER, 
-        RECEIVER_USER_ID, RECEIVER_EMAIL, RECEIVER_ACCOUNT_NUMBER, TERMSCHECK, AMOUNT) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      `INSERT INTO INTER_BANK_TRANSACTIONS
+         (TRANS_ID, SENDER_USER_ID, SENDER_EMAIL, SENDER_ACCOUNT_NUMBER,
+         RECEIVER_USER_ID, RECEIVER_EMAIL, RECEIVER_ACCOUNT_NUMBER, TERMSCHECK, AMOUNT)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
       [trans_id, snd_id, snd_email, snd_accnum, recv_id, recv_email, recv_accnum, check, amount]
     );
-
+    TransactionEmail(recv_accnum, recv_email,amount);
     // Insert into history
     const history_id = await checkDuplicateId2();
     await pool.query(
