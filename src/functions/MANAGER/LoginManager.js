@@ -51,17 +51,17 @@ export const loginManager = async (req, res) => {
         });
       } else {
         if(!approved){
-          return res.status(404).json({ error: "Your Account is not approved wait 1 working day after signup or Contact your nearest branch" });
+          return res.status(404).json({ message: "Your Account is not approved wait 1 working day after signup or Contact your nearest branch" });
  
         }
         console.log("Authentication failed: Incorrect password");
-        return res.status(404).json({ error: "Authentication failed: Incorrect password" });
+        return res.status(404).json({ message: "Authentication failed: Incorrect password" });
 
       }
     } else {
       // No user found with the given email
       console.log("Authentication failed: User not found");
-      return res.status(404).json({ error: "Authentication failed:  User not found" });
+      return res.status(404).json({ message: "Authentication failed:  User not found" });
 
     }
   } catch (err) {

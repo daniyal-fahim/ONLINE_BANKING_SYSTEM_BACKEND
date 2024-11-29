@@ -53,16 +53,16 @@ export const login = async (req, res) => {
       } else {
         // Passwords do not match
         if(!approved){
-          return res.status(404).json({ error: "Your Account is not approved wait 1 working day after signup or Contact your nearest branch" });
+          return res.status(404).json({ message: "Your Account is not approved wait 1 working day after signup or Contact your nearest branch" });
  
         }
         console.log("Authentication failed: Incorrect password");
-        return res.status(404).json({ error: "Authentication failed: Incorrect password" });
+        return res.status(404).json({ message: "Authentication failed: Incorrect password" });
 
       }
     } else {
       // No user found with the given email
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
   } catch (err) {
     console.error(err.message);
