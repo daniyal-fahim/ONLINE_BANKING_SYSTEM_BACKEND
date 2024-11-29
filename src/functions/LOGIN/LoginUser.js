@@ -18,7 +18,7 @@ export const login = async (req, res) => {
       const user = result.rows[0];
       const match = await bcrypt.compare(password, user.password);
       const user_id=user.user_id;
-      const approved=user.Approved;
+      const approved=user.approved;
       if (match && approved) {
         setGId(user_id);
 

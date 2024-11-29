@@ -17,7 +17,7 @@ export const loginManager = async (req, res) => {
       const manager = result.rows[0];
       const match = await bcrypt.compare(password, manager.password);
       const admin_id=manager.admin_id;
-      const approved=manager.Approved;
+      const approved=manager.approved;
       if (match && approved) {
         setGId(admin_id);
         var user_id=admin_id;
