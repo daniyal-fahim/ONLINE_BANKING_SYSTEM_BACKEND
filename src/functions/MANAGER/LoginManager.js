@@ -17,8 +17,8 @@ export const loginManager = async (req, res) => {
       const manager = result.rows[0];
       const match = await bcrypt.compare(password, manager.password);
       const admin_id=manager.admin_id;
-
-      if (match) {
+      const approved=user.Approved;
+      if (match && approved) {
         setGId(admin_id);
         var user_id=admin_id;
         var data = {
@@ -50,12 +50,19 @@ export const loginManager = async (req, res) => {
           token:token
         });
       } else {
-        // Passwords do not match
+        if(!approved){
+          return res.status(404).json({ error: "Your Account is not approved wait 1 working day after signup or Contact your nearest branch" });
+ 
+        }
         console.log("Authentication failed: Incorrect password");
+        return res.status(404).json({ error: "Authentication failed: Incorrect password" });
+
       }
     } else {
       // No user found with the given email
       console.log("Authentication failed: User not found");
+      return res.status(404).json({ error: "Authentication failed:  User not found" });
+
     }
   } catch (err) {
     console.error(err.message);
