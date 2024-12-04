@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " FAQ EMAIL SENDING"
+git commit -m " FAQ EMAIL SENDING correcting"
 git status
 git push -u origin main
 

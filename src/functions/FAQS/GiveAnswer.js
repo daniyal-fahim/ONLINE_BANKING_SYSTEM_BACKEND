@@ -6,7 +6,7 @@ export const GiveAnswer = async (req, res) => {
   const { FAQ_ID, answer } = req.body;
   var question;
   const user_id = getGId();
-
+ 
   // Check if admin is logged in by verifying if the user_id starts with 'AD'
   if (!user_id.startsWith('AD')) {
     return res.status(403).json({ message: `Only an admin can provide an answer ${user_id}` });

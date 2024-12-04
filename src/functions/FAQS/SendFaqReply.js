@@ -50,7 +50,7 @@ export const FAQEmail = async (user_id,answer,question) => {
     });
 
   
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent: %s", info.messageId); 
     return { success: true, messageId: info.messageId };
   } catch (err) {
     console.error("Server error: ", err.message);
