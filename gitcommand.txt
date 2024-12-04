@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m " APPROVAL REQUIREMENT ADDED FOR LOGGIN IN 3 correcting logic"
+git commit -m " FAQ EMAIL SENDING"
 git status
 git push -u origin main
 
