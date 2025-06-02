@@ -24,7 +24,7 @@ const app = express();
 const corsOptions = {
     origin: [
         'http://localhost:3000',  // For local development
-        'https://ddd-banking-app-88r4.vercel.app'  
+        'https://ddd-banking-app-88r4.vercel.app','https://ddd-banking-app.vercel.app'
     ],
     credentials: true,  
     optionSuccessStatus: 200
